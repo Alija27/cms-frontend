@@ -5,7 +5,7 @@ type TextProps = {
   name: string;
   placeholder: string;
   type: string;
-  required: boolean;
+  required?: boolean;
   className?: string;
   error?: string;
 }
@@ -15,8 +15,8 @@ const TextFields = (props: TextProps) => {
 
   return (
     <>
-      <label htmlFor={name} className="block text-gray-600 font-semibold text-xl  text-md  mb-2">{label}</label>
-      <input id={name} name={name} placeholder={placeholder} type={type} required={required} className={`p-4 border border-gray-200 text-gray-700 leading-tight text-xl rounded-md w-full shadow focus:bg-white focus:outline-none focus:border-blue-400 ${className}`} />
+      <label htmlFor={name} className="block text-gray-600 font-semibold text-md  text-md  mb-2">{label}</label>
+      <input id={name} name={name} placeholder={placeholder} type={type} required={required} className={`p-2 border border-gray-200 text-gray-700 leading-tight text-md rounded-md w-full shadow focus:bg-white focus:outline-none focus:border-blue-400 ${className}`} />
       {error && (
         <div className="text-red-500">{error}</div>
       )}
