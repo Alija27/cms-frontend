@@ -58,13 +58,13 @@ const Navbar = () => {
           <span className="lg:hidden" onClick={toggleMenu}>  <FaBars />  </span>
         </span>
       </nav>
-      <ul className={`  bg-white shadow-md flex flex-col absolute  w-full lg:-top-96 lg:hidden text-center  top-28  ${isMenuOpen ? "-top-96" : ""} transistion-all duration-500 ease-in-out `}>
+      <ul className={`bg-white shadow-md flex flex-col absolute  w-full lg:-top-96 lg:hidden text-center    ${isMenuOpen ? "top-28" : " -top-96"} transistion-all duration-500 ease-in-out `}>
         {links.map((link, index) =>
           <a key={index} href={link.url} > <li className={`mx-5 px-5 p-2 mt-2 lg:mt-0 border-b-4  border-white  transition-colors duration-300 ease-in-out  hover:text-blue-500 hover:border-blue-500 rounded border-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:text-gradient-to-br ${link.className}`}>{link.text}</li> </a>
         )}
       </ul>
 
-
+      
     </>
   )
 }
