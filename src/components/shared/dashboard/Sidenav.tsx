@@ -38,7 +38,7 @@ const Sidenav = () => {
     return (
         <>
             <div className="flex">
-                <div className="bg-white w-2/12 shadow-lg py-2 absolute h-screen -left-[18%] lg:left-0  overflow-y-scroll main-sidebar">
+                <div className="bg-white w-[0px] md:w-[200px] transition-all duration-300 shadow-lg py-2 h-screen overflow-y-scroll main-sidebar">
                     <div className="font-bold  text-xl  p-2 shadow  text-gray-800 rounded border-b border-gray-200 flex space-x-2 justify-center ">
                          <span><img src={logo} className="h-8" /></span><span>  Dashboard </span>
                     </div>
