@@ -17,3 +17,12 @@
             background-color: rgb(233, 231, 231);
             border-radius: 50px;
         }
+        table thead tr th{
+            @apply p-2 text-left;
+        }
+        table tbody tr td{
+            @apply p-1 pl-2 text-left;
+        }
+        .table-striped > td {
+            background-color: #e9ecf0 !important;
+          }
