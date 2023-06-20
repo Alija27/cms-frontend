@@ -6,23 +6,6 @@ import { useState } from 'react'
 import Dropdown from '../dropdown/Dropdown'
 
 const Sidenav = () => {
-    /* const DropdownData=[
-        { text:"Alija",
-         childTexts:[
-            {child:"Alija",url:"/a"},
-            {child:"Sandeep",url:"/s"}
-        ]
-},
-{ text:"Sandeep",
-        
-         childTexts:[
-            {child:"Alija",url:"/a"},
-            {child:"Sandeep",url:"/s"}
-        ]
-},
-
-
-]; */
     const [isSidenavOpen, setSidenavOpen] = useState(false);
 
     const SidenavToggle = () => {
