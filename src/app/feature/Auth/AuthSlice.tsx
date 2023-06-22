@@ -20,11 +20,11 @@ export const AuthSlice = createSlice({
          
         });
         builder.addCase(login.fulfilled,(state,action)=>{
-            localStorage.setItem("token",action.payload.data.token);
+            localStorage.setItem("token", action.payload.token);
             state.login.loading=false;
             state.login.error=false;
             state.login.success=true;
-            state.current_user=action.payload.data.user;
+            state.current_user=action.payload.user;
         });
 
         builder.addCase(login.rejected,(state)=>{
