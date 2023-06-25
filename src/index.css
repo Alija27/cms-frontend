@@ -26,3 +26,12 @@
         .table-striped > td {
             background-color: #e9ecf0 !important;
           }
+          .dashlink:hover{
+            background-color:#14aca4
+          }
+          thead{
+            background-color:#14aca4
+          }
+          .dashboardlink{
+            background-color:#14aca4
+          }
