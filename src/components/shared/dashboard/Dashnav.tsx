@@ -1,14 +1,17 @@
 import React from 'react'
-import logo from '../../../assets/LICTlogo.png'
+import {RxHamburgerMenu} from "react-icons/rx"
+import {HiOutlineUserCircle} from "react-icons/hi"
+import {FcManager} from "react-icons/fc"
 const Dashnav = () => {
   return (
     <>
-      <div className="bg-white px-2 shadow py-3 w-full flex justify-between">
-        <div>
-Menu
+      <div className="bg-white px-2 shadow py-3  flex justify-between mt-1">
+        <div className="">
+          <RxHamburgerMenu size={25}/>
         </div>
-        <div className="rounded-full bg-blue-500 h-8 w-8 p-2 text-center text-white border-2 border-gray-200">
-          <img src={logo} />
+        <div>
+         <FcManager size={28} className="border-2  rounded-full "/> 
+        {/* <HiOutlineUserCircle size={28} className="border-2  rounded-full "/> */}
         </div>
       </div>
 
