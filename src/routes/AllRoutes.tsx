@@ -5,6 +5,8 @@ import Login from '../components/landingPage/pages/Login'
 import  PublicRoutes  from './PublicRoutes'
 import authRoutes  from './AuthRoutes'
 import AuthRoute from './middleware/AuthRoute'
+import adminRoutes from './AdminRoutes'
+import AdminRoute from './middleware/AdminRoute'
 
 const AllRoutes = () => {
   return (
@@ -20,6 +22,15 @@ const AllRoutes = () => {
 
         <Route element={<AuthRoute/>}>
         {authRoutes.map((route)=>(
+            <Route
+            key={route.id}
+            path={route.path}
+            element={route.component}
+            />
+        ))}
+        </Route>
+        <Route element={<AdminRoute/>}>
+        {adminRoutes.map((route)=>(
             <Route
             key={route.id}
             path={route.path}
