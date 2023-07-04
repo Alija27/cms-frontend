@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login } from "./AuthApi"
+import { login,getuser } from "./AuthApi"
 
 export const AuthSlice = createSlice({
     name: "Auth",
@@ -8,8 +8,14 @@ export const AuthSlice = createSlice({
         login: {
             loading: false,
             error: false,
-            success: false,
+            success: false,  
         },
+        getuser:{
+            loading:false,
+            error:false,
+            success:false,
+        },
+
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -33,6 +39,34 @@ export const AuthSlice = createSlice({
             state.login.success=false;
             state.current_user=null;
         });
+
+        builder.addCase(getuser.pending,(state)=>{
+            state.getuser.loading=true;
+            state.getuser.error=false;
+            state.getuser.success=false;
+        });
+
+        builder.addCase(getuser.fulfilled,(state,action)=>{
+            state.getuser.loading=false;
+            state.getuser.error=false;
+            state.getuser.success=true;
+            state.current_user=action.payload.data;
+        }
+        );
+
+        builder.addCase(getuser.rejected,(state)=>{
+            state.getuser.loading=false;
+            state.getuser.error=true;
+            state.getuser.success=false;
+            state.current_user=null;
+        }
+        );
+
+       
+
+
+
+        
 
     },
 });
