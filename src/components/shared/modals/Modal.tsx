@@ -34,7 +34,7 @@ export const ModalBody =({children, ...props}:any)=>{
 
 export const ModalFooter =({children, ...props}:any)=>{ 
   return(
-    <div className={`flex space-x-2 ${props.className}`} >
+    <div className={`flex space-x-2 mt-5 ${props.className}`} >
       {children}
     </div>
   )
