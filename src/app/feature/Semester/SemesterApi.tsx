@@ -32,9 +32,9 @@ export const createSemester = createAsyncThunk(
 
 export const updateSemester = createAsyncThunk(
     "updateSemester",
-    async (data: any, { rejectWithValue }) => {
+    async ({data,id}: any,{ rejectWithValue }) => {
         try {
-            const res = await axiosInstance.put(`http://localhost:8000/api/semesters/${data.id}`, data);
+            const res = await axiosInstance.put(`http://localhost:8000/api/semesters/${id}`, data);
             return res.data;
         }
         catch (err: any) {
