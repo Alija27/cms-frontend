@@ -1,14 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllDepartments,createDepartment,getDepartmentById,updateDepartment, deleteDepartment } from "./DepartmentApi";
-
+type Department = {
+    id: number;
+    name: string;
+    // ... other properties
+  };
 export const DepartmentSlice = createSlice({
     name: "Department",
     initialState: {
+        departments: [] as Department[],
+    updatedDepartment: null as Department | null,
         getAllDepartments: {
             loading: false,
             error: false,
             success: false,
-            departments: [],
+            
         },
         createDepartment: {
             loading: false,
@@ -31,9 +37,9 @@ export const DepartmentSlice = createSlice({
             error:false,
             success:false,
         }
-        
-
     },
+
+    
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getAllDepartments.pending, (state) => {
@@ -47,7 +53,7 @@ export const DepartmentSlice = createSlice({
             state.getAllDepartments.loading = false;
             state.getAllDepartments.error = false;
             state.getAllDepartments.success = true;
-            state.getAllDepartments.departments = action.payload.data;
+            state.departments = action.payload.data;
         }
         ); 
         builder.addCase(getAllDepartments.rejected, (state) => {
@@ -62,12 +68,14 @@ export const DepartmentSlice = createSlice({
             state.createDepartment.success = false;
         }
         );  
-        builder.addCase(createDepartment.fulfilled, (state) => {
+        builder.addCase(createDepartment.fulfilled, (state:any,action) => {
             state.createDepartment.loading = false;
             state.createDepartment.error = false;
             state.createDepartment.success = true;
+            state.departments.push(action.payload.data);
         }
         );
+        
         builder.addCase(createDepartment.rejected, (state) => {
             state.createDepartment.loading = false;
             state.createDepartment.error = true;
@@ -85,8 +93,8 @@ export const DepartmentSlice = createSlice({
 
         builder.addCase(getDepartmentById.fulfilled,(state,action)=>{
            state.getDepartmentById.loading=false;
-           state.getDepartmentById.error=false,
-           state.getDepartmentById.success=true,
+           state.getDepartmentById.error=false;
+           state.getDepartmentById.success=true;
            state.getDepartmentById.department=action.payload.data;
         });
 
@@ -103,10 +111,14 @@ export const DepartmentSlice = createSlice({
         }
         );
 
-        builder.addCase(updateDepartment.fulfilled,(state)=>{
+        builder.addCase(updateDepartment.fulfilled,(state, action)=>{
             state.updateDepartment.loading=false;
             state.updateDepartment.error=false;
             state.updateDepartment.success=true;
+            state.updatedDepartment = action.payload.data;
+      state.departments = state.departments.map((department) =>
+        department.id === action.payload.data.id ? action.payload.data : department
+      );
         }
         );
 
@@ -124,10 +136,14 @@ export const DepartmentSlice = createSlice({
         }
         );
 
-        builder.addCase(deleteDepartment.fulfilled,(state)=>{
+        builder.addCase(deleteDepartment.fulfilled,(state:any,action)=>{
             state.deleteDepartment.loading=false;
             state.deleteDepartment.error=false;
             state.deleteDepartment.success=true;
+            state.departments=state.departments
+            .filter((department:any)=>department.id!==action.payload.data.id);
+            
+           
         }
         );
 
