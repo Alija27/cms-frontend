@@ -1,6 +1,6 @@
 import axios from 'axios';
 const axiosInstance = axios.create({
-    timeout: 1000,
+    timeout: 5000,
     headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -13,7 +13,11 @@ axiosInstance.interceptors.request.use(
         return config;
     },
     function (error) {
-        return Promise.reject(error);
+        if (error.code === 'ECONNABORTED' && error.message.includes('timeout')) {
+            console.log('Request timed out');
+          }
+          return Promise.reject(error);
+        
     }
 
 
