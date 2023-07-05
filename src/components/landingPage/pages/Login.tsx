@@ -23,7 +23,7 @@ const Login = () => {
         email: yup.string().email().required(),
         password: yup.string().required(),
       })
-
+      
     ),
   })
 
@@ -64,7 +64,7 @@ const Login = () => {
 
 
 
-              <Buttons text="Sign In" type="submit" className="w-full py-2"/>
+              <Buttons text="Sign In" type="submit" className="w-full py-2 dashboardlink"/>
 
 
 
