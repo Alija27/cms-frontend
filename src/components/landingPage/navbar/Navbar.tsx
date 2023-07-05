@@ -22,7 +22,8 @@ const Navbar = () => {
     { text: "Home", url: "/" },
     { text: "About", url: "/about" },
     { text: "Contact", url: "/contact" },
-    { text: "Gallery", url: "/gallery" }
+    { text: "Gallery", url: "/gallery" },
+    { text: "Login", url: "/login" }
   ];
   return (
     <>
