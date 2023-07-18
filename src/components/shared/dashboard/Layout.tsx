@@ -10,9 +10,11 @@ import { useAppSelector } from '../../../app/hooks'
 const Layout = ({children}:any) => {
   const authState=useAppSelector((store)=>store.AuthSlice);
   let navlinks:DNavLinks[]=[];
-  navlinks=adminNavLinks;
+  
   if(authState.current_user && authState.current_user.roles.includes("admin")){
     navlinks=adminNavLinks;
+  }else{
+    navlinks=[];
   }
   return (
     <>

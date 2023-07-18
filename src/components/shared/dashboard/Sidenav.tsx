@@ -21,24 +21,22 @@ const Sidenav = ({ navlinks }: any) => {
 
     return (
         <>
-            <div className="flex">
-                <div className="bg-white w-[0px] md:w-[200px] transition-all duration-300 shadow-lg py-2 h-screen overflow-y-scroll main-sidebar">
-                    <div className="font-bold  text-xl  p-2 shadow  text-gray-800 rounded border-b border-gray-200 flex space-x-2 justify-center ">
+            <div className="flex border-r ">
+                <div className="w-[210px] bg-white transition-all duration-300  py-2 h-screen  main-sidebar">
+                    <div className="font-semibold  text-xl  p-2  shadow text-gray-800 rounded  flex space-x-4 justify-center ">
                         <span><img src={logo} className="h-8" /></span><span>  Dashboard </span>
                     </div>
-                    {/* <div className="font-semibold text-center text-sm border-b py-1 border-gray-200 text-gray-500 rounded">
-                        Welcome, Admin
-                    </div> */}
+                  
 
-                    <div className="p-2 text-gray-500 font-semibold  mr-2 pl-5 ">
+                    <div className="p-2 text-gray-800 font-semibold  mr-2 pl-5  ">
                         {navlinks.map((navlink: DNavLinks) => {
                             return (
                                 <div key={navlink.section}>
                                     {navlink.links.map((link: DLinks) => {
                                         return (
                                             <>
-                                            <NavLink className={`${(({isActive,}:any)=>isActive &&"bg-blue-500")}`} to={link.to}>
-                                                <div className="hover:bg-blue-500 p-2 rounded hover:text-white  mt-1 flex" key={link.to} >
+                                            <NavLink className={`${(({isActive,}:any)=>isActive &&"bg-[#15C39A]")}`} to={link.to}>
+                                                <div className=" dashlink p-2 rounded hover:text-white  mt-1 flex" key={link.to} >
                                                     <span>{link.icon}</span> <span className="pl-5">{link.name}</span>
                                                 </div>
                                                 </NavLink>
