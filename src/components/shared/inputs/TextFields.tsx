@@ -17,8 +17,8 @@ const TextFields = (props: TextProps) => {
   return (
     <>
    <div className="flex flex-col gap-1">
-      <label htmlFor={name} className="block text-gray-600  text-md font-md ">{label} {required && <span className="text-red-500">*</span>}</label>
-      <input id={name} name={name} placeholder={placeholder} type={type} required={required} className={`p-2 border border-gray-200 text-gray-700 leading-tight text-md rounded-md w-full shadow focus:bg-white focus:outline-none focus:border-blue-400 ${className}`} {...(register&&register(name))} />
+      <label htmlFor={name} className="block text-gray-600    ">{label} {required && <span className="text-red-500">*</span>}</label>
+      <input id={name} name={name} placeholder={placeholder} type={type} required={required} className={`p-2 border border-gray-300 text-gray-700 leading-tight text-md rounded-md w-full shadow focus:bg-white hover:border-1 hover:border-[#afaeae] focus:outline-none focus:border-blue-500 focus:border-2 ${className}`} {...(register && register(name))} />
       {error && (
         <div className="text-red-500">{error}</div>
       )}
