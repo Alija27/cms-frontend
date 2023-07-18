@@ -43,9 +43,9 @@ export const getDepartmentById = createAsyncThunk(
 
 export const updateDepartment = createAsyncThunk(
     "updateDepartment",
-    async (data: any, { rejectWithValue }) => {
+    async ({data,id}: any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.put(`http://localhost:8000/api/departments/${data.id}`, data);
+            const res = await axiosInstance.put(`http://localhost:8000/api/departments/${id}`, data);
             return res.data;
         }
         catch (err: any) {

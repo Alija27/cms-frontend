@@ -9,7 +9,6 @@ export const DepartmentSlice = createSlice({
     name: "Department",
     initialState: {
         departments: [] as Department[],
-    updatedDepartment: null as Department | null,
         getAllDepartments: {
             loading: false,
             error: false,
@@ -115,9 +114,9 @@ export const DepartmentSlice = createSlice({
             state.updateDepartment.loading=false;
             state.updateDepartment.error=false;
             state.updateDepartment.success=true;
-            state.updatedDepartment = action.payload.data;
-      state.departments = state.departments.map((department) =>
-        department.id === action.payload.data.id ? action.payload.data : department
+             state.departments = state.departments.map((department:any) =>
+        department.id === action.payload.data.id ? action.payload.data:department
+        
       );
         }
         );
