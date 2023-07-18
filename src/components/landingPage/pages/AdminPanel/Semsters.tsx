@@ -5,7 +5,7 @@ import * as yup from "yup"
 import { FaEdit, FaEye, FaCross } from 'react-icons/fa'
 import { AiFillDelete } from 'react-icons/ai'
 import { DeleteModal } from '../../../shared/modals/DeleteModal'
-import Buttons from '../../../shared/buttons/Buttons'  
+import Buttons from '../../../shared/buttons/Buttons'
 import { RxCross2 } from 'react-icons/rx'
 import Layout from '../../../shared/dashboard/Layout'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from '../../../shared/modals/Modal'
@@ -13,102 +13,105 @@ import TextFields from '../../../shared/inputs/TextFields'
 import { TableLayout, Table, THead, TBody, TableActions } from "../../../shared/table/Table"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import { useEffect, useState } from 'react'
-import { getAllSemesters,createSemester,deleteSemester } from '../../../../app/feature/Semester/SemesterApi'
+import { getAllSemesters, createSemester, deleteSemester, updateSemester } from '../../../../app/feature/Semester/SemesterApi'
 import { HeaderModal, ViewModal } from '../../../shared/modals/ViewModal'
 
 const Semsters = () => {
-    const dispatch = useAppDispatch();
-    const SemesterState = useAppSelector((store) => store.SemesterSlice);
+  const dispatch = useAppDispatch();
+  const SemesterState = useAppSelector((store) => store.SemesterSlice);
 
-    //display all semesters
-    useEffect(() => {
-        dispatch(getAllSemesters());
-    }, [dispatch]);
+  //display all semesters
+  useEffect(() => {
+    dispatch(getAllSemesters());
+  }, [dispatch]);
 
-    //display modal to add a new semester
-    const [showAddModal, setShowAddModal] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const[selectedSemester,setSelectedSemester]=useState<any>(null);
-    const[showViewModal,setShowViewModal]=useState(false);
-    const {register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
-        mode: "onChange",
-        resolver: yupResolver(
-            yup.object().shape({
-                name: yup.string().required(),
-            })
-            ),
-    })
+  //display modal to add a new semester
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedSemester, setSelectedSemester] = useState<any>(null);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(
+      yup.object().shape({
+        name: yup.string().required(),
+      })
+    ),
+  })
 
-    useEffect(()=>{
-      if(selectedSemester){
-        setValue("name",selectedSemester?.name)
-      }
-    },[selectedSemester,setValue])
-
-    const onsubmit = async (data: any) => {
-        if (selectedSemester) {
-            await dispatch(createSemester({ data, id: selectedSemester?.id })).then((res: any) => {
-                if (res.payload.success) {
-                    setShowAddModal(false);
-                    setSelectedSemester(null);
-                    reset();
-                }
-            });
-            
-        await dispatch(createSemester(data)).then((res: any) => {
-            if (res.payload.success) {
-                setShowAddModal(false);
-                reset();
-            }
-        });
+  useEffect(() => {
+    if (selectedSemester) {
+      setValue("name", selectedSemester?.name)
     }
-}
+  }, [selectedSemester, setValue])
 
+  const onsubmit = async (data: any) => {
+    if (selectedSemester) {
+      await dispatch(updateSemester({ data, id: selectedSemester?.id })).then((res: any) => {
+        if (res.payload.success) {
+          setShowAddModal(false);
+          setSelectedSemester(null);
+          reset();
+        }
+      });
+    } else {
 
-   const onCancel = () => {
-        setShowAddModal(false);
-        setSelectedSemester(null);
+      await dispatch(createSemester(data)).then((res: any) => {
+        if (res.payload.success) {
+          setShowAddModal(false);
+          reset();
+        }
 
-        reset();
-    }
-
-    const onCancelViewModal =()=>{
-        setShowViewModal(false);
-        setSelectedSemester(null);
-    }
-
-    const onCancelDeleteModal =()=>{
-        setShowDeleteModal(false);
-        setSelectedSemester(null);
-    }
-
-    
-
-    const handleDelete = async () => {
-      console.log("selected", selectedSemester);
-      await dispatch(deleteSemester(selectedSemester?.id)).then((res: any) => {
-        console.log(res);
-          if (res.payload.success) {
-              setShowDeleteModal(false);
-              setSelectedSemester(null);
-          }
       });
     }
+
+  }
+
+
+  const onCancel = () => {
+    setShowAddModal(false);
+    setSelectedSemester(null);
+
+    reset();
+  }
+
+  const onCancelViewModal = () => {
+    setShowViewModal(false);
+    setSelectedSemester(null);
+  }
+
+  const onCancelDeleteModal = () => {
+    setShowDeleteModal(false);
+    setSelectedSemester(null);
+  }
+
+
+
+  const handleDelete = async () => {
+    console.log("selected", selectedSemester);
+    await dispatch(deleteSemester(selectedSemester?.id)).then((res: any) => {
+      console.log(res);
+      if (res.payload.success) {
+        setShowDeleteModal(false);
+        setSelectedSemester(null);
+      }
+    });
+  }
 
 
   return (
     <>
-    <Layout>
+      <Layout>
         <div className="w-full">
           <TableLayout heading="Semesters"
             rightheading={<Buttons
               text="Add New"
               type="button"
               className="dashboardlink"
-                onClick={() => {
-                    setShowAddModal(true);
-                }
-                }
+              onClick={() => {
+                setShowAddModal(true);
+              }
+              }
 
             />}>
             <div >
@@ -127,15 +130,15 @@ const Semsters = () => {
                       <td>{index + 1}</td>
                       <td>{semester?.name}</td>
                       <TableActions>
-                         <div className="hover:text-green-800">
+                        <div className="hover:text-green-800">
                           <FaEye size={20} onClick={() => {
                             setSelectedSemester(semester)
                             setShowViewModal(true)
-                          } }/>
-                            </div>
+                          }} />
+                        </div>
                         <div className="hover:text-blue-800">
                           <FaEdit size={20} onClick={() => {
-                            {setSelectedSemester(semester)}
+                            { setSelectedSemester(semester) }
                             setShowAddModal(true);
                           }} />
                         </div>
@@ -161,9 +164,9 @@ const Semsters = () => {
       {showAddModal ? (
         <Modal >
           <ModalHeader>
-            {selectedSemester ? "Edit Semester": " Add semesters"}
+            {selectedSemester ? "Edit Semester" : " Add semesters"}
           </ModalHeader>
-          <form className="flex flex-col space-y-4"   onSubmit={handleSubmit(onsubmit)} >
+          <form className="flex flex-col space-y-4" onSubmit={handleSubmit(onsubmit)} >
             <ModalBody>
               <TextFields
                 register={register}
@@ -175,9 +178,9 @@ const Semsters = () => {
             </ModalBody>
             <ModalFooter className="justify-end">
               <Buttons text="Cancel" type="submit" className="bg-gray-500"
-                onClick={() => {onCancel()}}
+                onClick={() => { onCancel() }}
               />
-              <Buttons text={`${selectedSemester ? "Edit":"Add"}`} type="submit" className="dashboardlink" />
+              <Buttons text={`${selectedSemester ? "Edit" : "Add"}`} type="submit" className="dashboardlink" />
             </ModalFooter>
           </form>
         </Modal>)
@@ -190,24 +193,24 @@ const Semsters = () => {
       ) : ""}
 
       {showViewModal ? (
-       <div>
-        <ViewModal>
-          <HeaderModal heading="Semester Details">
-            <RxCross2 size={20} onClick={() => {
-              onCancelViewModal();
-            }} />
+        <div>
+          <ViewModal>
+            <HeaderModal heading="Semester Details">
+              <RxCross2 size={20} onClick={() => {
+                onCancelViewModal();
+              }} />
 
-          </HeaderModal>
-          <div className="flex flex-col space-y-4">
-            <div className="mt-1">
-              <span className="font-semibold mr-1">Name:</span>
-              <span>{selectedSemester?.name}</span>
+            </HeaderModal>
+            <div className="flex flex-col space-y-4">
+              <div className="mt-1">
+                <span className="font-semibold mr-1">Name:</span>
+                <span>{selectedSemester?.name}</span>
+              </div>
             </div>
-          </div>
-      </ViewModal>
-   </div>
-      ):""}
-      
+          </ViewModal>
+        </div>
+      ) : ""}
+
     </>
   )
 }
