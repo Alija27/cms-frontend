@@ -4,9 +4,8 @@ import Layout from '../components/shared/dashboard/Layout'
 export const AccountantRoutes = [
     {
         id:1,
-        path:"/dashboard",
+        path:"/account",
         component:<Layout/>
-
     },
     {
         id:2,

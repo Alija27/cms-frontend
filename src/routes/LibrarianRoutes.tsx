@@ -4,7 +4,7 @@ import Layout from '../components/shared/dashboard/Layout'
 export const LibrarianRoutes = [
     {
         id:1,
-        path:"/dashboard",
+        path:"/library",
         component:<Layout/>
     }
 ]
