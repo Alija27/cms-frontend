@@ -1,4 +1,3 @@
-import React from 'react'
 import Layout from '../../../shared/dashboard/Layout'
 import { TableLayout, Table, THead, TBody, TableActions } from "../../../shared/table/Table"
 import Buttons from "../../../shared/buttons/Buttons"
@@ -32,7 +31,6 @@ const Users = () => {
                                     <th>Address</th>
                                     <th>Phone</th>
                                     <th>Date_of_birth</th>
-                                    <th>Actions</th>
                                 </tr>
                             </THead>
                             <TBody>
@@ -44,8 +42,6 @@ const Users = () => {
                                         <td>{user.address}</td>
                                         <td>{user.phonenumber}</td>
                                         <td>{user.date_of_birth}</td>
-                                        <TableActions></TableActions>
-
                                     </tr>
                                 ))}
                             </TBody>
