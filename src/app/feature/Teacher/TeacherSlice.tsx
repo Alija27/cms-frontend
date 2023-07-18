@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllTeachers, createTeacher, getTeacherById, updateTeacher, deleteTeacher } from "./TeacherApi";
 export const TeacherSlice = createSlice({
+
+
     name: "Teacher",
+    
     initialState: {
+        teachers:[],
         getAllTeachers: {
             loading: false,
             error: false,
             success: false,
-            teachers: [],
         },
         createTeacher: {
             loading: false,
@@ -44,7 +47,8 @@ export const TeacherSlice = createSlice({
             state.getAllTeachers.loading = false;
             state.getAllTeachers.error = false;
             state.getAllTeachers.success = true;
-            state.getAllTeachers.teachers = action.payload.data;
+            state.teachers = action.payload.data;
+
         }
         );
 
@@ -127,10 +131,11 @@ export const TeacherSlice = createSlice({
         }
         );
 
-        builder.addCase(deleteTeacher.fulfilled, (state) => {
+        builder.addCase(deleteTeacher.fulfilled, (state:any,action) => {
             state.deleteTeacher.loading = false;
             state.deleteTeacher.error = false;
-            state.deleteTeacher.success = true;
+            state.deleteTeacher.success = true;     
+            state.teachers = state.teachers.filter((teacher:any) => teacher.id !== action.payload.data.id);       
         }
         );
     },
