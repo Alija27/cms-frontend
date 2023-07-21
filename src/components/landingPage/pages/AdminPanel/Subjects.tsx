@@ -1,5 +1,5 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { get, useForm } from 'react-hook-form'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { FaEdit, FaEye, FaCross } from 'react-icons/fa'
@@ -25,19 +25,20 @@ const Subject = () => {
     const courseState = useAppSelector((store) => store.CourseSlice);
     const semesterState = useAppSelector((store) => store.SemesterSlice);
 
-    //display all subjects
     useEffect(() => {
-        dispatch(getAllSubjects());
-    }, [dispatch]);
-
-    useEffect(() => {
-        dispatch(getAllCourses());
+        dispatch(getAllCourses(null));
     }, [dispatch]);
 
     useEffect(() => {
         dispatch(getAllSemesters());
     }, [dispatch]);
 
+    //display all subjects
+    useEffect(() => {
+        dispatch(getAllSubjects());
+    }, [dispatch,courseState,semesterState]);
+
+   
     
 
     //display modal to add a new subject
@@ -91,6 +92,7 @@ const [showViewModal, setShowViewModal] = useState(false);
             await dispatch(createSubject(data)).then((res: any) => {
                 if (res.payload.success) {
                     setShowAddModal(false);
+                    getAllSubjects();
                    
                     reset();
                 }
@@ -127,6 +129,7 @@ const [showViewModal, setShowViewModal] = useState(false);
     const handleSemesterChange = (option: any, actionMeta: any) => {
         console.log(option);
         setValue("semester_id", option.value);
+       
     }
     
     const onCancelViewModal = () => {
@@ -155,6 +158,10 @@ const [showViewModal, setShowViewModal] = useState(false);
                                     <tr>
                                         <th>SN</th>
                                         <th>Name</th>
+                                        <th>Course</th>
+                                        <th>Semester</th>
+                                        <th>Subject Code</th>
+                                        <th>Publication</th>
                                         <th>Actions</th>
 
                                     </tr>
@@ -164,17 +171,20 @@ const [showViewModal, setShowViewModal] = useState(false);
                                         <tr key={subject?.id}>
                                             <td>{index + 1}</td>
                                             <td>{subject?.subject_name}</td>
+                                            <td>{subject?.course_name}</td>
+                                            <td>{subject?.semester_name}</td>
+                                            <td>{subject?.subject_code}</td>
+                                            <td>{subject?.publication}</td>
                                             <TableActions>
-                                                <div className="hover:text-green-800">
+                                                {/* <div className="hover:text-green-800">
                                                     <FaEye size={20} onClick={() => {
                                                         setSelectedSubject(subject)
                                                         setShowViewModal(true)
                                                     }} />
-                                                </div>
+                                                </div> */}
                                                 <div className="hover:text-blue-800">
                                                     <FaEdit size={20} onClick={() => {
                                                         { setSelectedSubject(subject) }
-
                                                         setShowAddModal(true);
                                                     }} />
                                                 </div>

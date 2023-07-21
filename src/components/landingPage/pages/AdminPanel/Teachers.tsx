@@ -4,25 +4,148 @@ import { TableLayout, Table, THead, TBody, TableActions } from "../../../shared/
 import Buttons from "../../../shared/buttons/Buttons"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import { useEffect, useState } from 'react'
-import { TeacherSlice } from '../../../../app/feature/Teacher/TeacherSlice'
-import { getAllTeachers } from '../../../../app/feature/Teacher/TeacherApi'
+import { getAllTeachers, createTeacher, updateTeacher, deleteTeacher } from '../../../../app/feature/Teacher/TeacherApi'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from '../../../shared/modals/Modal'
 import TextFields from '../../../shared/inputs/TextFields'
+import { FaEdit, FaTrash } from 'react-icons/fa'
+import { DeleteModal } from '../../../shared/modals/DeleteModal'
+import { SelectInput } from '../../../shared/inputs/SelectInput'
+import { getAllSemesters } from '../../../../app/feature/Semester/SemesterApi'
+import { getAllDepartments } from '../../../../app/feature/Department/DepartmentApi'
+import { getAllCourses } from '../../../../app/feature/Course/CourseApi'
+import { set, useForm } from 'react-hook-form'
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+import { getAllSubjects } from '../../../../app/feature/Subject/SubjectApi'
 
 
 const Teachers = () => {
     const dispatch = useAppDispatch();
     const teacherState = useAppSelector((store) => store.TeacherSlice);
+    const semesterState = useAppSelector((store) => store.SemesterSlice);
+    const departmentState = useAppSelector((store) => store.DepartmentSlice);
+    const courseState = useAppSelector((store) => store.CourseSlice);
+    const subjectState = useAppSelector((store) => store.SubjectSlice);
+    const [selectedDepartment, setSelectedDepartment] = useState<any>(null);
 
+    useEffect(() => {
+        dispatch(getAllSemesters());
+    }, [dispatch]);
+    useEffect(() => {
+        dispatch(getAllDepartments());
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(getAllSubjects());
+    }, [dispatch]);
+    useEffect(() => {
+        dispatch(getAllCourses(selectedDepartment));
+    }, [dispatch, selectedDepartment]);
     useEffect(() => {
         dispatch(getAllTeachers());
     }, [dispatch]);
 
     const [showAddModal, setShowAddModal] = useState(false);
+    const [selectedTeacher, setSelectedTeacher] = useState<any>(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
 
     const onCancel = () => {
         setShowAddModal(false);
+        reset();
     }
+
+    const onCancelDeleteModal = () => {
+        setShowDeleteModal(false);
+        reset();
+    }
+
+    const handleDelete = async () => {
+        await dispatch(deleteTeacher(selectedTeacher?.id)).then((res: any) => {
+            if (res.payload.success) {
+                setShowDeleteModal(false);
+                setSelectedTeacher(null);
+                reset();
+            }
+        })
+    }
+
+    const handleSemesterChange = (option: any, actionMeta: any) => {
+        console.log(option);
+        const value = option.map((opt: any) => opt.value);
+        setValue("semester_id",value);
+    }
+
+    const handleDepartmentChange = (option: any, actionMeta: any) => {
+        console.log(option);
+        const value = option.map((opt: any) => opt.value);
+        setSelectedDepartment(value);
+        setValue("department_id",value);
+    }
+
+    const handleSubjectChange = (option: any, action: any) => {
+        console.log(option);
+        const value = option.map((opt: any) => opt.value);
+        setValue("subject_id",value);
+    }
+
+    const handleCourseChange = (option: any, actionMeta: any) => {
+        console.log(option);
+        const value = option.map((opt: any) => opt.value);
+        setValue("course_id",value);
+    }
+
+    const onsubmit = async (data: any) => {
+        if (selectedTeacher) {
+            await dispatch(updateTeacher({ data, id: selectedTeacher?.id })).then((res: any) => {
+                if (res.payload.success) {
+                    setShowAddModal(false);
+                    setSelectedTeacher(null);
+                    reset();
+                }
+            });
+        } else {
+            await dispatch(createTeacher(data)).then((res: any) => {
+                if (res.payload.success) {
+                    setShowAddModal(false);
+                    reset();
+                }
+            });
+        }
+    }
+
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
+        mode: "onChange",
+        resolver: yupResolver(
+            yup.object().shape({
+                user_name: yup.string().required(),
+                email: yup.string().required(),
+                password: yup.string().required(),
+                address: yup.string().required(),
+                phonenumber: yup.string().required(),
+                date_of_birth: yup.string().required(),
+                department_id: yup.array().required(),
+                course_id:yup.array().required(),
+                semester_id: yup.array().required(),
+                subject_id: yup.array().required(),
+            })
+        ),
+    })
+
+    useEffect(() => {
+        if (selectedTeacher) {
+            setValue("user_name", selectedTeacher?.user_name);
+            setValue("email", selectedTeacher?.email);
+            setValue("password", selectedTeacher?.password);
+            setValue("address", selectedTeacher?.address);
+            setValue("phonenumber", selectedTeacher?.phonenumber);
+            setValue("date_of_birth", selectedTeacher?.date_of_birth);
+            setValue("department_id", selectedTeacher?.department.id);
+            setValue("course_id", selectedTeacher?.course.id);
+            setValue("semester_id", selectedTeacher?.semester.id);
+            setValue("subject_id", selectedTeacher?.subject.id);
+        }
+    }, [selectedTeacher, setValue]);
 
 
     return (
@@ -49,14 +172,25 @@ const Teachers = () => {
                                     </tr>
                                 </THead>
                                 <TBody>
-                                    {teacherState.getAllTeachers.teachers.map((teacher: any, index) => (
+                                    {teacherState.teachers.map((teacher: any, index) => (
                                         <tr key={teacher.id}>
                                             <td>{index + 1}</td>
-                                            <td>{teacher.name}</td>
+                                            <td>{teacher.user_name}</td>
+                                            <TableActions>
+                                                <div className="hover:text-blue-800">
+                                                    <FaEdit size={20} onClick={() => {
+                                                        setSelectedTeacher(teacher);
+                                                        setShowAddModal(true);
+                                                    }} />
+                                                </div>
+                                                <div className="hover:text-red-800">
+                                                    <FaTrash size={20} onClick={() => {
+                                                        setSelectedTeacher(teacher);
+                                                        setShowDeleteModal(true);
 
-
-                                            <TableActions></TableActions>
-
+                                                    }} />
+                                                </div>
+                                            </TableActions>
                                         </tr>
                                     ))}
                                 </TBody>
@@ -71,55 +205,122 @@ const Teachers = () => {
                         Add User
                     </ModalHeader>
                     <ModalBody>
-                        <form className="flex flex-col space-y-4">
+                        <form className="flex flex-col space-y-4" onSubmit={handleSubmit(onsubmit)}>
                             <TextFields
-                                name="name"
+                                name="user_name"
+                                register={register}
                                 type="text"
                                 placeholder="Enter your name here"
-                                label="Name"/>
-
+                                error={errors.user_name?.message}
+                                label="Name" />
                             <TextFields
                                 name="email"
+                                register={register}
                                 type="email"
                                 placeholder="Enter your email here"
-                                label="Email"/>
-
-                                
+                                error={errors.email?.message}
+                                label="Email" />
                             <TextFields
                                 name="password"
+                                register={register}
                                 type="password"
                                 placeholder="Enter your password here"
-                                label="Password"/>
-
+                                error={errors.password?.message}
+                                label="Password" />
                             <TextFields
                                 name="address"
+                                register={register}
                                 type="text"
                                 placeholder="Enter your address here"
-                                label="Address"/>
-
+                                error={errors.address?.message}
+                                label="Address" />
                             <TextFields
                                 name="phonenumber"
+                                register={register}
                                 type="text"
                                 placeholder="Enter your phone here"
-                                label="Phone"/>
-
+                                error={errors.phonenumber?.message}
+                                label="Phone" />
                             <TextFields
                                 name="date_of_birth"
+                                register={register}
                                 type="date"
                                 placeholder="Enter your date of birth here"
-                                label="Date of Birth"/> 
-                                 
+                                error={errors.date_of_birth?.message}
+                                label="Date of Birth" />
 
+                            <SelectInput
+                                name="department_id"
+                                register={register}
+                                options={departmentState.departments.map((department: any) => ({
+                                    value: department.id,
+                                    label: department.name
+                                }))}
+                                onChange={handleDepartmentChange}
+                                error={errors.department_id?.message}
+                                isMulti
+                            />
+
+                            {selectedDepartment && selectedDepartment.length > 0 && (
+                                <SelectInput
+                                    name="course_id"
+                                    register={register}
+                                    options={courseState.courses.map((course: any) => ({
+                                        value: course.id,
+                                        label: course.course_name
+                                    }))}
+
+                                    onChange={handleCourseChange}
+                                    error={errors.course_id?.message}
+                                    isMulti
+                                />
+                            )
+                            }
+
+
+                            <SelectInput
+                                name="semester_id"
+                                register={register}
+                                options={semesterState.semesters.map((semester: any) => ({
+                                    value: semester.id,
+                                    label: semester.name
+                                }))}
+                                onChange={handleSemesterChange}
+                                error={errors.semester_id?.message}
+                                isMulti
+                            />
+
+
+                            <SelectInput
+                                name="subject_id"
+                                register={register}
+                                options={subjectState.subjects.map((subject: any) => ({
+                                    value: subject.id,
+                                    label: subject.subject_name
+                                }))}
+                                onChange={handleSubjectChange}
+                                error={errors.subject_id?.message}
+                                isMulti
+                            />
+
+
+                            <ModalFooter className="justify-end">
+                                <Buttons text="Cancel" type="submit" className="bg-gray-500"
+                                    onClick={onCancel}
+                                />
+                                <Buttons text="Save" type="submit" className="dashboardlink" />
+                            </ModalFooter>
                         </form>
                     </ModalBody>
-                    <ModalFooter className="justify-end">
-                        <Buttons text="Cancel" type="submit" className="bg-gray-500"
-                        onClick={onCancel}
-                        />
-                        <Buttons text="Save" type="submit" className="dashboardlink" />
-                    </ModalFooter>
                 </Modal>)
                 : ""}
+
+            {showDeleteModal ? (
+                <DeleteModal>
+                    <button className="bg-red-500 text-white px-3 py-2 rounded-md" onClick={handleDelete}>Delete</button>
+                    <button className="bg-gray-500 text-white px-3 py-2 rounded-md" onClick={onCancelDeleteModal} >Cancel</button>
+                </DeleteModal>
+            ) : ""}
         </>
 
 
