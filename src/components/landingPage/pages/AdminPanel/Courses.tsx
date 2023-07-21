@@ -23,7 +23,7 @@ export const Courses = () => {
     const departmentState = useAppSelector((store) => store.DepartmentSlice);
     //display all courses
     useEffect(() => {
-        dispatch(getAllCourses());
+        dispatch(getAllCourses(null));
     }, [dispatch]);
     
     //display all departments
@@ -56,7 +56,7 @@ export const Courses = () => {
     useEffect(() => {
         if (selectedCourse) {
             setValue("course_name", selectedCourse?.course_name);
-            setValue("department_id", selectedCourse?.department_id);
+            setValue("department_id", selectedCourse?.department.id);
             setValue("fees", selectedCourse?.fees);
             
         }
@@ -122,6 +122,8 @@ export const Courses = () => {
                   <tr>
                     <th>SN</th>
                     <th>Name</th>
+                    <th>Department</th>
+                    <th>Fees</th>
                     <th>Actions</th>
 
                   </tr>
@@ -131,6 +133,8 @@ export const Courses = () => {
                     <tr key={course?.id}>
                       <td>{index + 1}</td>
                       <td>{course?.course_name}</td>
+                      <td>{course?.department?.name}</td>
+                      <td>{course?.fees}</td>
                       <TableActions>
                         <div className="hover:text-blue-800">
                           <FaEdit size={20} onClick={() => {
@@ -183,7 +187,7 @@ export const Courses = () => {
                   label: department.name,
                   value: department.id
                 }))}
-                defaultValue= {selectedCourse ? {value:selectedCourse?.department?.id,label:selectedCourse?.department?.name }:""}
+                defaultValue= {selectedCourse ? {value:selectedCourse?.department.id,label:selectedCourse?.department.name }:""}
               />
               <TextFields
                 register={register}

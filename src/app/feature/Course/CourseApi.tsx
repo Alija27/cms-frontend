@@ -4,9 +4,9 @@ import axiosInstance from "../../../config/axiosInstance";
     
 export const getAllCourses = createAsyncThunk(
     "getAllCourses",
-    async (undefined, { rejectWithValue }) => {
+    async (department_id:any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.get("http://localhost:8000/api/courses");
+            const res = await axiosInstance.get("http://localhost:8000/api/courses",{params:{department_id}});
             return res.data;
         }
         catch (err: any) {
