@@ -46,6 +46,7 @@ export const SubjectSlice =  createSlice({
             state.success=true;
             state.message=action.payload.message;
             state.subjects.push(action.payload.data);
+            state.subject=action.payload.data;
         }
         );
         builder.addCase(createSubject.rejected,(state)=>{
