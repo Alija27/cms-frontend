@@ -6,6 +6,7 @@ import DepartmentSlice from "./feature/Department/DepartmentSlice";
 import SemesterSlice from "./feature/Semester/SemesterSlice";
 import SubjectSlice from "./feature/Subject/SubjectSlice";
 import CourseSlice from "./feature/Course/CourseSlice";
+import BatchSlice from "./feature/Batch/BatchSlice";
 
 const rootReducer = combineReducers({
     AuthSlice:AuthSlice,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     SemesterSlice:SemesterSlice,
     SubjectSlice:SubjectSlice,
     CourseSlice:CourseSlice,
+    BatchSlice:BatchSlice,
 });
 
 export default rootReducer;
