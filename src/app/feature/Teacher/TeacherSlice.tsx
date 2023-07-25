@@ -43,7 +43,7 @@ export const TeacherSlice = createSlice({
         }
         );
 
-        builder.addCase(getAllTeachers.fulfilled, (state, action) => {
+        builder.addCase(getAllTeachers.fulfilled, (state:any, action) => {
             state.getAllTeachers.loading = false;
             state.getAllTeachers.error = false;
             state.getAllTeachers.success = true;
@@ -67,10 +67,11 @@ export const TeacherSlice = createSlice({
         }
         );
 
-        builder.addCase(createTeacher.fulfilled, (state) => {
+        builder.addCase(createTeacher.fulfilled, (state:any,action) => {
             state.createTeacher.loading = false;
             state.createTeacher.error = false;
             state.createTeacher.success = true;
+            state.teachers.push(action.payload.data);
         }
         );
 
@@ -88,7 +89,7 @@ export const TeacherSlice = createSlice({
         }
         );
 
-        builder.addCase(getTeacherById.fulfilled, (state, action) => {
+        builder.addCase(getTeacherById.fulfilled, (state:any, action) => {
             state.getTeacherById.loading = false;
             state.getTeacherById.error = false;
             state.getTeacherById.success = true;
@@ -110,10 +111,11 @@ export const TeacherSlice = createSlice({
         }
         );
 
-        builder.addCase(updateTeacher.fulfilled, (state) => {
+        builder.addCase(updateTeacher.fulfilled, (state:any,action) => {
             state.updateTeacher.loading = false;
             state.updateTeacher.error = false;
             state.updateTeacher.success = true;
+            state.teachers = state.teachers.map((teacher:any) => teacher.id === action.payload.data.id ? action.payload.data : teacher);
         }
         );
 
