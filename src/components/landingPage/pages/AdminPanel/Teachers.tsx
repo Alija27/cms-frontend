@@ -27,6 +27,8 @@ const Teachers = () => {
     const courseState = useAppSelector((store) => store.CourseSlice);
     const subjectState = useAppSelector((store) => store.SubjectSlice);
     const [selectedDepartment, setSelectedDepartment] = useState<any>(null);
+    const [selectedCourse, setSelectedCourse] = useState<any>(null);
+
 
     useEffect(() => {
         dispatch(getAllSemesters());
@@ -36,8 +38,8 @@ const Teachers = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(getAllSubjects());
-    }, [dispatch]);
+        dispatch(getAllSubjects(selectedCourse));
+    }, [dispatch, selectedCourse]);
     useEffect(() => {
         dispatch(getAllCourses(selectedDepartment));
     }, [dispatch, selectedDepartment]);
@@ -52,6 +54,7 @@ const Teachers = () => {
 
     const onCancel = () => {
         setShowAddModal(false);
+        setSelectedTeacher(null);
         reset();
     }
 
@@ -70,11 +73,7 @@ const Teachers = () => {
         })
     }
 
-    const handleSemesterChange = (option: any, actionMeta: any) => {
-        console.log(option);
-        const value = option.map((opt: any) => opt.value);
-        setValue("semester_id",value);
-    }
+   
 
     const handleDepartmentChange = (option: any, actionMeta: any) => {
         console.log(option);
@@ -92,10 +91,12 @@ const Teachers = () => {
     const handleCourseChange = (option: any, actionMeta: any) => {
         console.log(option);
         const value = option.map((opt: any) => opt.value);
+        setSelectedCourse(value);
         setValue("course_id",value);
     }
 
     const onsubmit = async (data: any) => {
+        // 
         if (selectedTeacher) {
             await dispatch(updateTeacher({ data, id: selectedTeacher?.id })).then((res: any) => {
                 if (res.payload.success) {
@@ -109,6 +110,7 @@ const Teachers = () => {
                 if (res.payload.success) {
                     setShowAddModal(false);
                     reset();
+                    getAllTeachers();
                 }
             });
         }
@@ -126,14 +128,16 @@ const Teachers = () => {
                 date_of_birth: yup.string().required(),
                 department_id: yup.array().required(),
                 course_id:yup.array().required(),
-                semester_id: yup.array().required(),
                 subject_id: yup.array().required(),
             })
         ),
     })
 
     useEffect(() => {
+
         if (selectedTeacher) {
+            console.log(selectedTeacher)
+            setSelectedDepartment(selectedTeacher?.department.id);
             setValue("user_name", selectedTeacher?.user_name);
             setValue("email", selectedTeacher?.email);
             setValue("password", selectedTeacher?.password);
@@ -142,7 +146,6 @@ const Teachers = () => {
             setValue("date_of_birth", selectedTeacher?.date_of_birth);
             setValue("department_id", selectedTeacher?.department.id);
             setValue("course_id", selectedTeacher?.course.id);
-            setValue("semester_id", selectedTeacher?.semester.id);
             setValue("subject_id", selectedTeacher?.subject.id);
         }
     }, [selectedTeacher, setValue]);
@@ -168,6 +171,13 @@ const Teachers = () => {
                                     <tr>
                                         <th>SN</th>
                                         <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Department</th>
+                                        
+                                        <th>Course</th>
+                                        <th>Subject</th>
+                                        <th>Action</th>
+
 
                                     </tr>
                                 </THead>
@@ -176,6 +186,10 @@ const Teachers = () => {
                                         <tr key={teacher.id}>
                                             <td>{index + 1}</td>
                                             <td>{teacher.user_name}</td>
+                                            <td>{teacher.email}</td>
+                                            <td>{teacher.department}</td>
+                                            <td>{teacher.course}</td>
+                                            <td>{teacher.subject}</td>
                                             <TableActions>
                                                 <div className="hover:text-blue-800">
                                                     <FaEdit size={20} onClick={() => {
@@ -202,7 +216,7 @@ const Teachers = () => {
             {showAddModal ? (
                 <Modal >
                     <ModalHeader>
-                        Add User
+                        {selectedTeacher ? "Update User" : "Add User"}  
                     </ModalHeader>
                     <ModalBody>
                         <form className="flex flex-col space-y-4" onSubmit={handleSubmit(onsubmit)}>
@@ -258,12 +272,14 @@ const Teachers = () => {
                                 }))}
                                 onChange={handleDepartmentChange}
                                 error={errors.department_id?.message}
+                                defaultValue={selectedTeacher}
                                 isMulti
                             />
 
                             {selectedDepartment && selectedDepartment.length > 0 && (
                                 <SelectInput
                                     name="course_id"
+                                    defaultValue={selectedCourse}
                                     register={register}
                                     options={courseState.courses.map((course: any) => ({
                                         value: course.id,
@@ -274,35 +290,25 @@ const Teachers = () => {
                                     error={errors.course_id?.message}
                                     isMulti
                                 />
+                               
                             )
                             }
 
-
+                            {selectedDepartment && selectedCourse && selectedCourse.length > 0 && (
                             <SelectInput
-                                name="semester_id"
-                                register={register}
-                                options={semesterState.semesters.map((semester: any) => ({
-                                    value: semester.id,
-                                    label: semester.name
-                                }))}
-                                onChange={handleSemesterChange}
-                                error={errors.semester_id?.message}
-                                isMulti
-                            />
 
-
-                            <SelectInput
                                 name="subject_id"
                                 register={register}
                                 options={subjectState.subjects.map((subject: any) => ({
                                     value: subject.id,
-                                    label: subject.subject_name
+                                    label: subject.subject_name + " " + "("+subject.course_name + ")"
                                 }))}
                                 onChange={handleSubjectChange}
                                 error={errors.subject_id?.message}
                                 isMulti
+                                    
                             />
-
+                            )}
 
                             <ModalFooter className="justify-end">
                                 <Buttons text="Cancel" type="submit" className="bg-gray-500"
