@@ -4,9 +4,9 @@ import axiosInstance from "../../../config/axiosInstance";
 
 export const getAllSubjects = createAsyncThunk(
     "getAllSubject",
-    async (undefined, { rejectWithValue }) => {
+    async (subject_id:any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.get("http://localhost:8000/api/subjects");
+            const res = await axiosInstance.get("http://localhost:8000/api/subjects",{params:{subject_id}});
             return res.data;
         }
         catch (err:any) {
