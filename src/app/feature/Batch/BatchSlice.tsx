@@ -47,6 +47,7 @@ export const BatchSlice = createSlice({
             state.error = false;
             state.success = true;
             state.batches.push(action.payload.data);
+            
         }
         );
 
