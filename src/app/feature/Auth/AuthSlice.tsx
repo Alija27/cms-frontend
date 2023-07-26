@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login,getuser } from "./AuthApi"
+import { login,getuser,logout } from "./AuthApi"
 
 export const AuthSlice = createSlice({
     name: "Auth",
@@ -61,6 +61,29 @@ export const AuthSlice = createSlice({
             state.current_user=null;
         }
         );
+
+        builder.addCase(logout.pending,(state)=>{
+            state.login.loading=true;
+            state.login.error=false;
+            state.login.success=false;
+        }
+        );
+
+        builder.addCase(logout.fulfilled,(state)=>{
+            state.login.loading=false;
+            state.login.error=false;
+            state.login.success=true;
+            state.current_user=null;
+        }
+        );
+
+        builder.addCase(logout.rejected,(state)=>{
+            state.login.loading=false;
+            state.login.error=true;
+            state.login.success=false;
+        }
+        );
+        
 
        
 
