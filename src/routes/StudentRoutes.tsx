@@ -7,3 +7,4 @@ export const StudentRoutes = [
         component:<Layout/>
     }
 ]
+export    default StudentRoutes

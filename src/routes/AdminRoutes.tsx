@@ -9,6 +9,7 @@ import Semsters from '../components/landingPage/pages/AdminPanel/Semsters';
 import Subjects from '../components/landingPage/pages/AdminPanel/Subjects';
 import { Courses } from '../components/landingPage/pages/AdminPanel/Courses';
 import { Batches } from '../components/landingPage/pages/AdminPanel/Batches';
+import { Books } from '../components/landingPage/pages/AdminPanel/Book';
 
 const AdminRoutes = [
     {
@@ -50,6 +51,11 @@ const AdminRoutes = [
         id: 7,
         path: "/batches",
         component: <Batches/>
+    },
+    {
+        id: 8,
+        path:"/library",
+        component: <Books/>
     }
 ]
 
