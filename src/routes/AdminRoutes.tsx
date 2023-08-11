@@ -1,6 +1,3 @@
-import React from 'react'
-import Layout from '../components/shared/dashboard/Layout';
-import DataDisplay from '../components/shared/crud/DataDisplay';
 import { AdminHome } from '../components/landingPage/pages/AdminPanel/AdminHome';
 import Users from '../components/landingPage/pages/AdminPanel/Users';
 import Teachers from '../components/landingPage/pages/AdminPanel/Teachers';
@@ -10,6 +7,7 @@ import Subjects from '../components/landingPage/pages/AdminPanel/Subjects';
 import { Courses } from '../components/landingPage/pages/AdminPanel/Courses';
 import { Batches } from '../components/landingPage/pages/AdminPanel/Batches';
 import { Books } from '../components/landingPage/pages/AdminPanel/Book';
+import Students from '../components/landingPage/pages/AdminPanel/Student';
 
 const AdminRoutes = [
     {
@@ -29,6 +27,11 @@ const AdminRoutes = [
     },
     {
         id: 4,
+        path: "/students",
+        component: <Students/>
+    },
+    {
+        id: 4,
         path: "/departments",
         component: <Departments/>
     },
@@ -38,22 +41,22 @@ const AdminRoutes = [
         component: <Semsters/>
     },
     {
-        id: 5,
+        id: 6,
         path: "/subjects",
         component: <Subjects/>
     },
     {
-        id: 6,
+        id: 7,
         path: "/courses",
         component: <Courses/>
     },
     {
-        id: 7,
+        id: 8,
         path: "/batches",
         component: <Batches/>
     },
     {
-        id: 8,
+        id: 9,
         path:"/library",
         component: <Books/>
     }

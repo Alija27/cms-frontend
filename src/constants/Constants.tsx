@@ -113,15 +113,11 @@ export const accountantNavLinks: DNavLinks[] = [
             },
 
             {
-                name: "Library",
-                to: "/accountant/library",
+                name: "Account",
+                to: "/accountant/account",
                 icon: <ImLibrary size={20} />
             },
-            {
-                name: "Exam",
-                to: "/accountant/exam",
-                icon: <TfiWrite size={20} />
-            }
+            
         ]
     }
 ]
@@ -141,15 +137,11 @@ export const librarianNavLinks: DNavLinks[] = [
                 icon: <ImLibrary size={20} />
             },
             {
-                name: "Book Transactions",
+                name: "BookTransactions",
                 to: "/librarian/book-transactions",
                 icon: <ImLibrary size={20} />
-            },
-            {
-                name: "Users",
-                to: "/librarian/users",
-                icon: <FaUsers size={20} />
-            },
+           },
+            
         ]
     }
 ]
@@ -164,11 +156,6 @@ export const teacherNavLinks: DNavLinks[] = [
                 icon: <AiOutlineDashboard size={20} />
             },
             {
-                name: "Users",
-                to: "/teacher/users",
-                icon: <FaUsers size={20} />
-            },
-            {
                 name: "Students",
                 to: "/teacher/students",
                 icon: <FaUserGraduate size={20} />
@@ -178,11 +165,7 @@ export const teacherNavLinks: DNavLinks[] = [
                 to: "/teacher/library",
                 icon: <ImLibrary size={20} />
             },
-            {
-                name: "Exam",
-                to: "/teacher/exam",
-                icon: <TfiWrite size={20} />
-            },
+            
         ]
     }
 ]
@@ -213,11 +196,7 @@ export const examinerNavLinks: DNavLinks[] = [
                 icon: <FaUserGraduate size={20} />
             },
 
-            {
-                name: "Library",
-                to: "/examiner/library",
-                icon: <ImLibrary size={20} />
-            },
+            
             {
                 name: "Exam",
                 to: "/examiner/exam",
