@@ -1,9 +1,9 @@
 import {createSlice } from "@reduxjs/toolkit";
-import { getAllBookTransactions, createBookTransaction, updateBookTransaction, deleteBookTransaction } from "./BookTransactionApi";
+import { getAllBookTransactions, createBookTransaction, updateBookTransaction, deleteBookTransaction, updateStatus } from "./BookTransactionApi";
 export const BookTransactionSlice = createSlice({
     name: "BookTransaction",
     initialState: {
-        bookTransactions: [],
+        bookTransactions:[],
         loading: false,
         error: false,
         success: false,
@@ -45,6 +45,7 @@ export const BookTransactionSlice = createSlice({
             state.error = false;
             state.success = true;
             state.bookTransactions.push(action.payload.data);
+
             
         }
         );
@@ -92,12 +93,35 @@ export const BookTransactionSlice = createSlice({
             state.loading = false;
             state.error = false;
             state.success = true;
-            state.bookTransactions.push(action.payload.data);
+            state.bookTransactions=state.bookTransactions.filter((bookTransaction:any)=>bookTransaction.id!==action.payload.data.id);
             
         }
         );
 
         builder.addCase(deleteBookTransaction.rejected, (state) => {
+            state.loading = false;
+            state.error = true;
+            state.success = false;
+        }
+        );
+
+        builder.addCase(updateStatus.pending, (state) => {
+            state.loading = true;
+            state.error = false;
+            state.success = false;
+        }
+        );
+
+        builder.addCase(updateStatus.fulfilled, (state:any, action) => {
+            state.loading = false;
+            state.error = false;
+            state.success = true;
+            state.bookTransactions=state.bookTransactions.map((bookTransaction:any)=>bookTransaction.id===action.payload.data.id?action.payload.data:bookTransaction);
+            
+            
+        }
+        );
+        builder.addCase(updateStatus.rejected, (state) => {
             state.loading = false;
             state.error = true;
             state.success = false;
