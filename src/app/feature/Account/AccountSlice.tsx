@@ -129,3 +129,5 @@ export const AccountSlice = createSlice({
     }
 
 });
+
+export default AccountSlice.reducer;
