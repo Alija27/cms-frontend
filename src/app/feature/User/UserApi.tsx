@@ -3,9 +3,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getAllUsers = createAsyncThunk(
     "getallusers",
-    async(undefined,{rejectWithValue})=>{
+    async({role}:any,{rejectWithValue})=>{
         try{
-            const res= await axiosInstance.get("http://localhost:8000/api/users");
+            console.log("first")
+            const res= await axiosInstance.get(`http://localhost:8000/api/users${role ? `?role=${role}` : ""}`);
             return res.data;
         }
         catch(err:any){
