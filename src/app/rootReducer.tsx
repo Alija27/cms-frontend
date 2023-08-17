@@ -10,6 +10,13 @@ import BatchSlice from "./feature/Batch/BatchSlice";
 import BookSlice from "./feature/Book/BookSlice";
 import BookTransactionSlice from "./feature/BookTransaction/BookTransactionSlice";
 import StudentSlice from "./feature/Student/StudentSlice";
+import AccountSlice from "./feature/Account/AccountSlice";
+import PaymentSlice from "./feature/Payment/PaymentSlice";
+import ExamSlice from "./feature/Exam/ExamSlice";
+import ResultSlice from "./feature/Result/ResultSlice";
+import FinalExamReportSlice from "./feature/FinalExamReport/FinalExamReportSlice";
+import SalarySlice from "./feature/Salary/SalarySlice";
+import NoticeSlice from "./feature/Notice/NoticeSlice";
 
 const rootReducer = combineReducers({
     AuthSlice:AuthSlice,
@@ -23,6 +30,14 @@ const rootReducer = combineReducers({
     BookSlice:BookSlice,
     BookTransactionSlice:BookTransactionSlice,
     StudentSlice:StudentSlice,
+    AccountSlice:AccountSlice,
+    PaymentSlice:PaymentSlice,
+    ExamSlice:ExamSlice,
+    ResultSlice:ResultSlice,
+    FinalExamReportSlice:FinalExamReportSlice,
+    SalarySlice:SalarySlice,
+    NoticeSlice:NoticeSlice,
+
 });
 
 export default rootReducer;
