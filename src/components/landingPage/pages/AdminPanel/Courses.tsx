@@ -193,7 +193,7 @@ export const Courses = () => {
                 register={register}
                 error={errors?.fees?.message}
                 name="fees"
-                type="text"
+                type="number"
                 placeholder="Enter your fees here"
                 label="Fees" />
 

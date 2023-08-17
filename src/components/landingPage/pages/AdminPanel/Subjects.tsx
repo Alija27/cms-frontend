@@ -1,8 +1,8 @@
 import React from 'react'
-import { get, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { FaEdit, FaEye, FaCross } from 'react-icons/fa'
+import { FaEdit } from 'react-icons/fa'
 import { AiFillDelete } from 'react-icons/ai'
 import { DeleteModal } from '../../../shared/modals/DeleteModal'
 import Buttons from '../../../shared/buttons/Buttons'
@@ -35,7 +35,7 @@ const Subject = () => {
 
     //display all subjects
     useEffect(() => {
-        dispatch(getAllSubjects());
+        dispatch(getAllSubjects(null));
     }, [dispatch,courseState,semesterState]);
 
    
@@ -66,7 +66,6 @@ const [showViewModal, setShowViewModal] = useState(false);
     useEffect(() => {
 
         if (selectedSubject) {
-            getAllSubjects();
             setValue("subject_name", selectedSubject?.subject_name);
             setValue("course_id", selectedSubject?.course_id);
             setValue("semester_id", selectedSubject?.semester_id);
@@ -84,7 +83,7 @@ const [showViewModal, setShowViewModal] = useState(false);
                 if (res.payload.success) {
                     setShowAddModal(false);
                     setSelectedSubject(null);
-                    getAllSubjects();
+                    
                     reset();
                 }
             });
@@ -92,7 +91,7 @@ const [showViewModal, setShowViewModal] = useState(false);
             await dispatch(createSubject(data)).then((res: any) => {
                 if (res.payload.success) {
                     setShowAddModal(false);
-                    getAllSubjects();
+                  
                    
                     reset();
                 }

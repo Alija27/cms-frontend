@@ -14,13 +14,13 @@ const Users = () => {
     const userState = useAppSelector((store) => store.UserSlice);
 
     useEffect(() => {
-        dispatch(getAllUsers());
-    }, [dispatch])
+        dispatch(getAllUsers({role:null}));
+    }, [])
 
     return (
         <Layout>
             <div className="w-full">
-                <TableLayout heading="Users" rightheading={<Buttons text="Add New" type="button" className="dashboardlink" />}>
+                <TableLayout heading="Users" /* rightheading={<Buttons text="Add New" type="button" className="dashboardlink" />} */>
                     <div >
                         <Table >
                             <THead>
@@ -28,17 +28,20 @@ const Users = () => {
                                     <th>SN</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Roles</th>
                                     <th>Address</th>
                                     <th>Phone</th>
                                     <th>Date_of_birth</th>
+
                                 </tr>
                             </THead>
                             <TBody>
                                 {userState.getAllUsers.users.map((user: any, index) => (
                                     <tr key={user.id}>
                                         <td>{index + 1}</td>
-                                        <td>{user.name}</td>
+                                        <td>{user.user_name}</td>
                                         <td>{user.email}</td>
+                                        <td>{user.roles}</td>
                                         <td>{user.address}</td>
                                         <td>{user.phonenumber}</td>
                                         <td>{user.date_of_birth}</td>

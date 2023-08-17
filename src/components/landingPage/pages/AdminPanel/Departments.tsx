@@ -76,7 +76,7 @@ export const Departments = () => {
   };
 
   
-
+  
   const handleDelete = async () => {
     await dispatch(deleteDepartment(selectedDepartment?.id)).then((res: any) => {
       if (res.payload.success) {
@@ -154,7 +154,7 @@ export const Departments = () => {
           </ModalHeader>
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit(onsubmit)} >
             <ModalBody>
-
+              
               <TextFields
                 register={register}
                 error={errors?.name?.message}

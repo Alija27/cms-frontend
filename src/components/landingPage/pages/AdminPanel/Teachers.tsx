@@ -73,30 +73,30 @@ const Teachers = () => {
         })
     }
 
-   
+
 
     const handleDepartmentChange = (option: any, actionMeta: any) => {
         console.log(option);
         const value = option.map((opt: any) => opt.value);
         setSelectedDepartment(value);
-        setValue("department_id",value);
+        setValue("department_id", value);
     }
 
     const handleSubjectChange = (option: any, action: any) => {
         console.log(option);
         const value = option.map((opt: any) => opt.value);
-        setValue("subject_id",value);
+        setValue("subject_id", value);
     }
 
     const handleCourseChange = (option: any, actionMeta: any) => {
         console.log(option);
         const value = option.map((opt: any) => opt.value);
         setSelectedCourse(value);
-        setValue("course_id",value);
+        setValue("course_id", value);
     }
 
     const onsubmit = async (data: any) => {
-        // 
+        // set value of department_id, course_id, subject_id to what is selected in dropdown
         if (selectedTeacher) {
             await dispatch(updateTeacher({ data, id: selectedTeacher?.id })).then((res: any) => {
                 if (res.payload.success) {
@@ -127,7 +127,7 @@ const Teachers = () => {
                 phonenumber: yup.string().required(),
                 date_of_birth: yup.string().required(),
                 department_id: yup.array().required(),
-                course_id:yup.array().required(),
+                course_id: yup.array().required(),
                 subject_id: yup.array().required(),
             })
         ),
@@ -149,7 +149,7 @@ const Teachers = () => {
             setValue("subject_id", selectedTeacher?.subject.id);
         }
     }, [selectedTeacher, setValue]);
-
+    console.log("selected Teacher", selectedTeacher);
 
     return (
         <>
@@ -173,7 +173,7 @@ const Teachers = () => {
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Department</th>
-                                        
+
                                         <th>Course</th>
                                         <th>Subject</th>
                                         <th>Action</th>
@@ -183,13 +183,27 @@ const Teachers = () => {
                                 </THead>
                                 <TBody>
                                     {teacherState.teachers.map((teacher: any, index) => (
-                                        <tr key={teacher.id}>
+                                        <tr key={teacher?.id}>
                                             <td>{index + 1}</td>
-                                            <td>{teacher.user_name}</td>
-                                            <td>{teacher.email}</td>
-                                            <td>{teacher.department}</td>
-                                            <td>{teacher.course}</td>
-                                            <td>{teacher.subject}</td>
+                                            <td>{teacher?.user_name}</td>
+                                            <td>{teacher?.email}</td>
+                                            {teacher?.department.map((department: any, index: any) => (
+                                                <span key={department.id}>{department.name}
+
+
+                                                    {index !== teacher.department.length - 1 ? ', ' : ''}</span>
+                                            ))}
+
+                                            <td>
+                                                {teacher?.course.map((course: any, index: any) => (
+                                                    <span key={course.id}>{course.course_name}
+                                                        {index !== teacher.department.length - 1 ? ', ' : ''}</span>
+                                                ))}
+                                            </td>
+                                            <td>{teacher?.subject.map((subject: any, index: any) => (
+                                                <span key={subject.id}>{subject.subject_name}
+                                                    {index !== teacher.subject.length - 1 ? ', ' : ''}</span>
+                                            ))}</td>
                                             <TableActions>
                                                 <div className="hover:text-blue-800">
                                                     <FaEdit size={20} onClick={() => {
@@ -216,7 +230,7 @@ const Teachers = () => {
             {showAddModal ? (
                 <Modal >
                     <ModalHeader>
-                        {selectedTeacher ? "Update User" : "Add User"}  
+                        {selectedTeacher ? "Update User" : "Add User"}
                     </ModalHeader>
                     <ModalBody>
                         <form className="flex flex-col space-y-4" onSubmit={handleSubmit(onsubmit)}>
@@ -272,42 +286,51 @@ const Teachers = () => {
                                 }))}
                                 onChange={handleDepartmentChange}
                                 error={errors.department_id?.message}
-                                defaultValue={selectedTeacher}
+                                 defaultValue={selectedTeacher ? selectedTeacher?.department?.map((department: any) => ({
+                                    value: department.id,
+                                    label: department.name
+                                    })) : []} 
                                 isMulti
                             />
 
-                            {selectedDepartment && selectedDepartment.length > 0 && (
+                            {(selectedDepartment && selectedDepartment.length > 0) && (
                                 <SelectInput
                                     name="course_id"
-                                    defaultValue={selectedCourse}
                                     register={register}
                                     options={courseState.courses.map((course: any) => ({
                                         value: course.id,
                                         label: course.course_name
                                     }))}
-
+                                     defaultValue={selectedTeacher ? selectedTeacher?.course?.map((course: any) => ({
+                                        value: course.id,
+                                        label: course.course_name
+                                    })) : []} 
                                     onChange={handleCourseChange}
                                     error={errors.course_id?.message}
                                     isMulti
                                 />
-                               
+
                             )
                             }
 
-                            {selectedDepartment && selectedCourse && selectedCourse.length > 0 && (
-                            <SelectInput
+                            {(selectedDepartment && selectedCourse && selectedCourse.length > 0)&& (
+                                <SelectInput
+                                    name="subject_id"
+                                    register={register}
+                                    options={subjectState.subjects.map((subject: any) => ({
+                                        value: subject.id,
+                                        label: subject.subject_name + " " + "(" + subject.course_name + ")"
+                                    }))}
+                                    onChange={handleSubjectChange}
+                                     defaultValue={selectedTeacher ? selectedTeacher?.subject?.map((subject: any) => ({
+                                        value: subject.id,
+                                        label: subject.subject_name 
+                                    })) : []
+                                    } 
+                                    error={errors.subject_id?.message}
+                                    isMulti
 
-                                name="subject_id"
-                                register={register}
-                                options={subjectState.subjects.map((subject: any) => ({
-                                    value: subject.id,
-                                    label: subject.subject_name + " " + "("+subject.course_name + ")"
-                                }))}
-                                onChange={handleSubjectChange}
-                                error={errors.subject_id?.message}
-                                isMulti
-                                    
-                            />
+                                />
                             )}
 
                             <ModalFooter className="justify-end">
