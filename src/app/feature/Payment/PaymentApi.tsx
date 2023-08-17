@@ -62,4 +62,3 @@ export const deletePayment = createAsyncThunk(
         }
     }
 );
-

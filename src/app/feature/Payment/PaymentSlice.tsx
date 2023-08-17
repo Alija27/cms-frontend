@@ -100,3 +100,5 @@ export const PaymentSlice = createSlice({
         );
     }
 });
+
+export default PaymentSlice.reducer;
