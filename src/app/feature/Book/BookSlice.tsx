@@ -45,8 +45,7 @@ export const BookSlice = createSlice({
             state.error = false;
             state.success = true;
             state.books.push(action.payload.data);
-            
-            
+             
         }
         );
 

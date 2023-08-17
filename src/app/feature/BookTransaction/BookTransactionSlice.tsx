@@ -45,7 +45,6 @@ export const BookTransactionSlice = createSlice({
             state.error = false;
             state.success = true;
             state.bookTransactions.push(action.payload.data);
-
             
         }
         );
