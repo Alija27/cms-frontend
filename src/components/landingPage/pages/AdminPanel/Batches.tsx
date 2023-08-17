@@ -12,6 +12,8 @@ import { FaEdit } from 'react-icons/fa'
 import { AiFillDelete } from 'react-icons/ai'
 import { DeleteModal } from '../../../shared/modals/DeleteModal'
 import { getAllBatches, createBatch, updateBatch, deleteBatch } from '../../../../app/feature/Batch/BatchApi'
+import { success_toast } from '../../../../toast'
+
 
 
 
@@ -93,7 +95,7 @@ export const Batches = () => {
     setSelectedBatch(null);
     reset();
   }
-
+  
   return (
     <>
       <Layout>
