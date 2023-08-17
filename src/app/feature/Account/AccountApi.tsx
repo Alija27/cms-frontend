@@ -3,9 +3,9 @@ import axiosInstance from "../../../config/axiosInstance"
 
 export const getAllAccounts = createAsyncThunk(
     "getAllAccounts",
-    async (undefined, { rejectWithValue }) => {
+    async (user_id:any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.get("http://localhost:8000/api/accounts");
+            const res = await axiosInstance.get("http://localhost:8000/api/accounts",{params:{user_id}});
             return res.data;
         }
         catch (err: any) {

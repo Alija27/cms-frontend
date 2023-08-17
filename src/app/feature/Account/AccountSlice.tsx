@@ -104,28 +104,7 @@ export const AccountSlice = createSlice({
         }
         );
 
-        builder.addCase(updateAccount.pending, (state) => {
-            state.loading = true;
-            state.error = false;
-            state.success = false;
-        }
-        );
-
-        builder.addCase(updateAccount.fulfilled, (state: any, action) => {
-            state.loading = false;
-            state.error = false;
-            state.success = true;
-            state.accounts = state.accounts.map((account: any) => account.id === action.payload.data.id ? action.payload.data : account);
-        }
-        );
-
-        builder.addCase(updateAccount.rejected, (state) => {
-            state.loading = false;
-            state.error = true;
-            state.success = false;
-        }
-        );
-
+        
     }
 
 });
