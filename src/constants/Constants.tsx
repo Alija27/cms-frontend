@@ -205,7 +205,7 @@ export const examinerNavLinks: DNavLinks[] = [
             
             {
                 name: "Exam",
-                to: "/examiner/exam",
+                to: "/examiner/exams",
                 icon: <TfiWrite size={20} />
             }
         ]

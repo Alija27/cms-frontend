@@ -4,6 +4,7 @@ import Teachers from '../components/landingPage/pages/AdminPanel/Teachers'
 import Users from '../components/landingPage/pages/AdminPanel/Users'
 import { Payments } from '../components/landingPage/pages/AdminPanel/Payments'
 import LibraryHome from '../components/landingPage/pages/LibraryPanel/LibraryHome'
+import {Exams} from '../components/landingPage/pages/AdminPanel/Exams'
 
 export const AccountantRoutes = [
     {
@@ -19,7 +20,7 @@ export const AccountantRoutes = [
     {
         id:3,
         path:"/accountant/teachers",
-        component:<Teachers/>
+        component:<Exams/>
     },
     {
         id:4,
