@@ -43,7 +43,6 @@ export const Books = () => {
     setSelectedBook(null);
     reset();
   }
-
   //form data submit
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
     mode: "onChange",
