@@ -1,4 +1,5 @@
 import { Departments } from "../components/landingPage/pages/AdminPanel/Departments";
+import { Exams } from "../components/landingPage/pages/AdminPanel/Exams";
 import Semsters from "../components/landingPage/pages/AdminPanel/Semsters";
 import Students from "../components/landingPage/pages/AdminPanel/Student";
 import Teachers from "../components/landingPage/pages/AdminPanel/Teachers";
@@ -25,6 +26,11 @@ const ExaminerRoutes = [
         id: 4,
         path: "/examiner/students",
         component: <Students/>
+    },
+    {
+        id: 5,
+        path: "/examiner/exams",
+        component: <Exams/>
     },
     
     
