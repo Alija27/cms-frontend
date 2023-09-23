@@ -129,6 +129,9 @@ const Teachers = () => {
                 department_id: yup.array().required(),
                 course_id: yup.array().required(),
                 subject_id: yup.array().required(),
+                guardian_name: yup.string().required(),
+                guardian_phonenumber: yup.string().required(),
+                gender: yup.string().required(),
             })
         ),
     })
@@ -147,6 +150,9 @@ const Teachers = () => {
             setValue("department_id", selectedTeacher?.department.id);
             setValue("course_id", selectedTeacher?.course.id);
             setValue("subject_id", selectedTeacher?.subject.id);
+            setValue("guardian_name", selectedTeacher?.guardian_name);
+            setValue("guardian_phonenumber", selectedTeacher?.guardian_phonenumber);
+            setValue("gender", selectedTeacher?.gender);
         }
     }, [selectedTeacher, setValue]);
     console.log("selected Teacher", selectedTeacher);
@@ -276,6 +282,30 @@ const Teachers = () => {
                                 placeholder="Enter your date of birth here"
                                 error={errors.date_of_birth?.message}
                                 label="Date of Birth" />
+
+                               <TextFields
+                                name="guardian_name"
+                                register={register}
+                                type="text"
+                                placeholder="Enter your guardian name here"
+                                error={errors.guardian_name?.message}
+                                label="Guardian Name" />
+
+                                 <TextFields
+                                name="guardian_phonenumber"
+                                register={register}
+                                type="text"
+                                placeholder="Enter your guardian phone here"
+                                error={errors.guardian_phonenumber?.message}
+                                label="Guardian Phonenumber" />
+
+                                <TextFields
+                                name="gender"
+                                register={register}
+                                type="text"
+                                placeholder="Gender"
+                                label="Gender" />
+
 
                             <SelectInput
                                 name="department_id"
