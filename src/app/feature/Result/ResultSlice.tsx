@@ -66,13 +66,7 @@ export const ResultSlice = createSlice({
             state.loading = false;
             state.error = false;
             state.success = true;
-            state.results=state.results.map((result: any) => {
-                if (result.id === action.payload.data.id) {
-                    return action.payload.data;
-                }
-                return result;
-            }
-            );
+            state.results = state.results.map((result: any) => result.id === action.payload.data.id ? action.payload.data : result);
         }
         );
 
