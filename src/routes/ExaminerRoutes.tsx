@@ -1,5 +1,7 @@
 import { Departments } from "../components/landingPage/pages/AdminPanel/Departments";
 import { Exams } from "../components/landingPage/pages/AdminPanel/Exams";
+import FinalExamReport from "../components/landingPage/pages/AdminPanel/FinalExamReport";
+import { Results } from "../components/landingPage/pages/AdminPanel/Result";
 import Semsters from "../components/landingPage/pages/AdminPanel/Semsters";
 import Students from "../components/landingPage/pages/AdminPanel/Student";
 import Teachers from "../components/landingPage/pages/AdminPanel/Teachers";
@@ -32,6 +34,17 @@ const ExaminerRoutes = [
         path: "/examiner/exams",
         component: <Exams/>
     },
+    {
+        id: 6,
+        path: "/examiner/results",
+        component: <Results/>
+    },
+    {
+        id: 7,
+        path: "/examiner/final-exam-reports",
+        component: <FinalExamReport/>
+    },
+
     
     
 ]

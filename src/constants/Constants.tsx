@@ -207,7 +207,17 @@ export const examinerNavLinks: DNavLinks[] = [
                 name: "Exam",
                 to: "/examiner/exams",
                 icon: <TfiWrite size={20} />
-            }
+            },
+            {
+                name: "Results",
+                to: "/examiner/results",
+                icon: <TfiWrite size={20} />
+            },
+            {
+                name: "Final Exam Report",
+                to: "/examiner/final-exam-reports",
+                icon: <TfiWrite size={20} />
+            },
         ]
     }];
 
@@ -234,7 +244,7 @@ export const studentNavLinks: DNavLinks[] = [
                 name: "Exam",
                 to: "/student/exam",
                 icon: <TfiWrite size={20} />
-            }
+            },
         ]
     }
 ];
