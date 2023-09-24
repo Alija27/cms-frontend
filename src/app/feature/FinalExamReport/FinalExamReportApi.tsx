@@ -5,9 +5,9 @@ import { error_toast } from "../../../toast";
 
 export const getAllFinalExamReports = createAsyncThunk(
     "getAllFinalExamReports",
-    async (undefined, { rejectWithValue }) => {
+    async ({selectedCourse, selectedBatch, selectedSemester}:any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.get("http://localhost:8000/api/final-exam-reports");
+            const res = await axiosInstance.get(`http://localhost:8000/api/final-exam-reports?course_id=${selectedCourse}&batch_id=${selectedBatch}&semester_id=${selectedSemester}`);
             success_toast(res.data);
             return res.data;
         }

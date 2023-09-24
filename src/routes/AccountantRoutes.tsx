@@ -5,12 +5,14 @@ import Users from '../components/landingPage/pages/AdminPanel/Users'
 import { Payments } from '../components/landingPage/pages/AdminPanel/Payments'
 import LibraryHome from '../components/landingPage/pages/LibraryPanel/LibraryHome'
 import {Exams} from '../components/landingPage/pages/AdminPanel/Exams'
+import { AdminHome } from '../components/landingPage/pages/AdminPanel/AdminHome'
+import { Salaries } from '../components/landingPage/pages/AdminPanel/Salaries'
 
 export const AccountantRoutes = [
     {
         id:1,
         path:"/accountant",
-        component:<LibraryHome/>
+        component:<AdminHome/>
     },
     {
         id:2,
@@ -20,7 +22,7 @@ export const AccountantRoutes = [
     {
         id:3,
         path:"/accountant/teachers",
-        component:<Exams/>
+        component:<Teachers/>
     },
     {
         id:4,
@@ -31,7 +33,17 @@ export const AccountantRoutes = [
         id:5,
         path:"/accountant/payments",
         component:<Payments/>
-    }
+    },
+    {
+        id:6,
+        path:"/accountant/students",
+        component: <Students/>
+    },
+    {
+        id:7,
+        path:"/accountant/salaries",
+        component:<Salaries/>
+    },
 
 ]
 export default AccountantRoutes

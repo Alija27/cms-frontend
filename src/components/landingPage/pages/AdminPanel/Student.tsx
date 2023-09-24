@@ -43,7 +43,7 @@ const Students = () => {
         dispatch(getAllCourses(selectedDepartment));
     }, [dispatch, selectedDepartment]);
     useEffect(() => {
-        dispatch(getAllStudents());
+        dispatch(getAllStudents(null));
     }, [dispatch]);
 
 
@@ -76,8 +76,8 @@ const Students = () => {
 
 
     const handleDepartmentChange = (option: any, actionMeta: any) => {
-        console.log(option);
-       
+        console.log(option);    
+        setSelectedDepartment(option.value);
         setValue("department_id",  option.value);
     }
     
@@ -110,7 +110,7 @@ const Students = () => {
                 if (res.payload.success) {
                     setShowAddModal(false);
                     reset();
-                    getAllStudents();
+                    getAllStudents(null);
                 }
             });
         }
@@ -162,7 +162,22 @@ const Students = () => {
             <Layout>
                 <div className="w-full">
                     <TableLayout heading="Students"
-                        rightheading={<Buttons
+
+
+
+
+                        rightheading={
+                        <div className="flex gap-2">
+                            <a href="students/course/">
+                            <Buttons
+                            text="View ByCourse"
+                            type="button"
+                            className="dashboardlink"
+                           
+                        />
+                        </a>
+
+                        <Buttons
                             text="Add New"
                             type="button"
                             className="dashboardlink"
@@ -170,7 +185,8 @@ const Students = () => {
                                 console.log("Button clicked");
                                 setShowAddModal(true)
                             }}
-                        />}>
+                        />
+                        </div>}>
                         <div >
                             <Table >
                                 <THead>
@@ -296,6 +312,7 @@ const Students = () => {
 
 
                             <SelectInput
+                                text="Department"
                                 name="department_id"
                                 register={register}
                                 options={departmentState.departments.map((department: any) => ({
@@ -313,6 +330,7 @@ const Students = () => {
 
                           
                                 <SelectInput
+                                    text="Course"
                                     name="course_id"
                                     register={register}
                                     options={courseState.courses.map((course: any) => ({
@@ -333,11 +351,13 @@ const Students = () => {
         
                                 <SelectInput
                                     name="batch_id"
+
                                     register={register}
                                     options={batchState.batches.map((batch: any) => ({
                                         value: batch.id,
                                         label: batch.year
                                     }))}
+                                        text="Batch"
                                     onChange={handleBatchChange}
                                      /* defaultValue={selectedStudent ? selectedStudent?.batch?.map((batch: any) => ({
                                         value: batch.id,

@@ -122,7 +122,12 @@ export const accountantNavLinks: DNavLinks[] = [
                 name: "Payments",
                 to: "/accountant/payments",
                 icon: <ImLibrary size={20} />
-            }
+            },
+            {
+                name: "Salaries",
+                to: "/accountant/salaries",
+                icon: <ImLibrary size={20} />
+            },
             
         ]
     }

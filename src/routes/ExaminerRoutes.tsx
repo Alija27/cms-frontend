@@ -7,12 +7,13 @@ import Students from "../components/landingPage/pages/AdminPanel/Student";
 import Teachers from "../components/landingPage/pages/AdminPanel/Teachers";
 import Users from "../components/landingPage/pages/AdminPanel/Users";
 import Layout from "../components/shared/dashboard/Layout";
+import {AdminHome} from "../components/landingPage/pages/AdminPanel/AdminHome";
 
 const ExaminerRoutes = [
     {
         id: 1,
         path: "/examiner",
-        component: <Layout />
+        component: <AdminHome />
     },
     {
         id: 2,

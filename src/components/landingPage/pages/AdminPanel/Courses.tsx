@@ -179,6 +179,7 @@ export const Courses = () => {
                 label="Name" />
 
                 <SelectInput
+                text="Department"
                 name="department_id"
                 register={register}
                 onChange={hanadleDepartmentChange}

@@ -20,6 +20,7 @@ import { getAllSubjects } from '../../../../app/feature/Subject/SubjectApi'
 
 
 const Teachers = () => {
+    const authState = useAppSelector((store) => store.AuthSlice);
     const dispatch = useAppDispatch();
     const teacherState = useAppSelector((store) => store.TeacherSlice);
     const semesterState = useAppSelector((store) => store.SemesterSlice);
@@ -162,15 +163,19 @@ const Teachers = () => {
             <Layout>
                 <div className="w-full">
                     <TableLayout heading="Teachers"
-                        rightheading={<Buttons
-                            text="Add New"
-                            type="button"
-                            className="dashboardlink"
-                            onClick={() => {
-                                console.log("Button clicked");
-                                setShowAddModal(true)
-                            }}
-                        />}>
+                        rightheading={
+                            authState.current_user?.roles.includes("admin") &&
+                            <Buttons
+                                text="Add New"
+                                type="button"
+                                className="dashboardlink"
+                                onClick={() => {
+                                    console.log("Button clicked");
+                                    setShowAddModal(true)
+                                }}
+                            />
+                        }
+                    >
                         <div >
                             <Table >
                                 <THead>
@@ -283,7 +288,7 @@ const Teachers = () => {
                                 error={errors.date_of_birth?.message}
                                 label="Date of Birth" />
 
-                               <TextFields
+                            <TextFields
                                 name="guardian_name"
                                 register={register}
                                 type="text"
@@ -291,7 +296,7 @@ const Teachers = () => {
                                 error={errors.guardian_name?.message}
                                 label="Guardian Name" />
 
-                                 <TextFields
+                            <TextFields
                                 name="guardian_phonenumber"
                                 register={register}
                                 type="text"
@@ -299,7 +304,7 @@ const Teachers = () => {
                                 error={errors.guardian_phonenumber?.message}
                                 label="Guardian Phonenumber" />
 
-                                <TextFields
+                            <TextFields
                                 name="gender"
                                 register={register}
                                 type="text"
@@ -308,6 +313,7 @@ const Teachers = () => {
 
 
                             <SelectInput
+                                text="Department"
                                 name="department_id"
                                 register={register}
                                 options={departmentState.departments.map((department: any) => ({
@@ -316,25 +322,26 @@ const Teachers = () => {
                                 }))}
                                 onChange={handleDepartmentChange}
                                 error={errors.department_id?.message}
-                                 defaultValue={selectedTeacher ? selectedTeacher?.department?.map((department: any) => ({
+                                defaultValue={selectedTeacher ? selectedTeacher?.department?.map((department: any) => ({
                                     value: department.id,
                                     label: department.name
-                                    })) : []} 
+                                })) : []}
                                 isMulti
                             />
 
                             {(selectedDepartment && selectedDepartment.length > 0) && (
                                 <SelectInput
+                                    text="Course"
                                     name="course_id"
                                     register={register}
                                     options={courseState.courses.map((course: any) => ({
                                         value: course.id,
                                         label: course.course_name
                                     }))}
-                                     defaultValue={selectedTeacher ? selectedTeacher?.course?.map((course: any) => ({
+                                    defaultValue={selectedTeacher ? selectedTeacher?.course?.map((course: any) => ({
                                         value: course.id,
                                         label: course.course_name
-                                    })) : []} 
+                                    })) : []}
                                     onChange={handleCourseChange}
                                     error={errors.course_id?.message}
                                     isMulti
@@ -343,8 +350,9 @@ const Teachers = () => {
                             )
                             }
 
-                            {(selectedDepartment && selectedCourse && selectedCourse.length > 0)&& (
+                            {(selectedDepartment && selectedCourse && selectedCourse.length > 0) && (
                                 <SelectInput
+                                    text="Subject"
                                     name="subject_id"
                                     register={register}
                                     options={subjectState.subjects.map((subject: any) => ({
@@ -352,11 +360,11 @@ const Teachers = () => {
                                         label: subject.subject_name + " " + "(" + subject.course_name + ")"
                                     }))}
                                     onChange={handleSubjectChange}
-                                     defaultValue={selectedTeacher ? selectedTeacher?.subject?.map((subject: any) => ({
+                                    defaultValue={selectedTeacher ? selectedTeacher?.subject?.map((subject: any) => ({
                                         value: subject.id,
-                                        label: subject.subject_name 
+                                        label: subject.subject_name
                                     })) : []
-                                    } 
+                                    }
                                     error={errors.subject_id?.message}
                                     isMulti
 

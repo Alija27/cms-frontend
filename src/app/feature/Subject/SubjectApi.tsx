@@ -5,9 +5,9 @@ import { error_toast, success_toast } from "../../../toast";
 
 export const getAllSubjects = createAsyncThunk(
     "getAllSubject",
-    async (subject_id:any, { rejectWithValue }) => {
+    async (course_id:any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.get("http://localhost:8000/api/subjects",{params:{subject_id}});
+            const res = await axiosInstance.get("http://localhost:8000/api/subjects",{params:{course_id}});
             success_toast(res.data);
             return res.data;
         }

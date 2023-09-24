@@ -37,7 +37,7 @@ const Login = () => {
           <div className="text-lg font-bold text-center  font-serif text-gray-500">
             Sign in to your account
           </div>
-          <div className="text-xs w-full text-center text-blue-500">Don't have an account ? Sign up</div>
+          {/* <div className="text-xs w-full text-center text-blue-500">Don't have an account ? Sign up</div> */}
 
           <div className="flex flex-col">
             <form className="flex flex-col gap-6 " onSubmit={handleSubmit(onsubmit)}>
@@ -57,10 +57,10 @@ const Login = () => {
                 placeholder="Enter your password here"
                  label="Password"
               />
-              <div className="flex gap-4 justify-between">
+              {/* <div className="flex gap-4 justify-between">
                 <div> <input type="checkbox" className="mr-1" />Remember me </div>
                 <div>Forgot your Password?</div>
-              </div>
+              </div> */}
 
 
 

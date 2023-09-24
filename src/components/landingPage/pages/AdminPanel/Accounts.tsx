@@ -21,7 +21,7 @@ import { getAllCourses } from '../../../../app/feature/Course/CourseApi'
 
 
 export const Accounts = () => {
-
+  const authState=useAppSelector((store)=>store.AuthSlice);
   const dispatch = useAppDispatch();
   const accountState = useAppSelector((store) => store.AccountSlice);
   const userState = useAppSelector((store) => store.UserSlice);
@@ -124,7 +124,11 @@ export const Accounts = () => {
       <Layout>
         <div className="w-full">
           <TableLayout heading="Accounts"
-            rightheading={<Buttons
+            rightheading={
+            
+            
+           
+            <Buttons
               text="Add New"
               type="button"
               className="dashboardlink"

@@ -104,16 +104,7 @@ const Semsters = () => {
       <Layout>
         <div className="w-full">
           <TableLayout heading="Semesters"
-            rightheading={<Buttons
-              text="Add New"
-              type="button"
-              className="dashboardlink"
-              onClick={() => {
-                setShowAddModal(true);
-              }
-              }
-
-            />}>
+            >
             <div >
               <Table >
                 <THead>

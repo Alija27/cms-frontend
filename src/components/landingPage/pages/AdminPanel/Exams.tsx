@@ -88,7 +88,6 @@ export const Exams = () => {
         pass_marks: yup.string().required("Pass Marks is required"),
         description: yup.string().required("Description is required"),
         exam_type: yup.string().required("Exam Type is required"),
-
       })
     ),
   })
@@ -253,6 +252,7 @@ export const Exams = () => {
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit(onsubmit)} >
             <ModalBody>
               <SelectInput
+                text='Course'
                 register={register}
                 error={errors?.course_id?.message}
                 name="course_id"
@@ -267,6 +267,7 @@ export const Exams = () => {
 
               />
               <SelectInput
+                text='Semester'
                 register={register}
                 error={errors?.semester_id?.message}
                 name="semester_id"
@@ -280,6 +281,7 @@ export const Exams = () => {
 
               {(selectedCourse && setSelectedCourse.length > 0) &&
                 <SelectInput
+                  text='Subject'
                   register={register}
                   error={errors?.subject_id?.message}
                   name="subject_id"
@@ -302,6 +304,7 @@ export const Exams = () => {
 
 
               <SelectInput
+               text='Teacher'
                 register={register}
                 error={errors?.teacher_id?.message}
                 name="teacher_id"
@@ -311,6 +314,7 @@ export const Exams = () => {
                 }))
                 }
                 onChange={handleTeacherChange}
+                placeholder='Teacher'
 
               />
 

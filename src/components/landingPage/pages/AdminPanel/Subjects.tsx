@@ -222,6 +222,7 @@ const [showViewModal, setShowViewModal] = useState(false);
                                 label="Subject Name" />
                                 
                                 <SelectInput
+                                 text="Course"
                                  register={register}
                                  error={errors.course_id?.message}
                                   name="course_id"
@@ -234,6 +235,7 @@ const [showViewModal, setShowViewModal] = useState(false);
                                 
                                 />
                                 <SelectInput
+                                    text="Semester"
                                  register={register}
                                     error={errors.semester_id?.message}
                                     name="semester_id"
