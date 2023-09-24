@@ -7,7 +7,7 @@ export const getAllFinalExamReports = createAsyncThunk(
     "getAllFinalExamReports",
     async (undefined, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.get("http://localhost:8000/api/final_exam_reports");
+            const res = await axiosInstance.get("http://localhost:8000/api/final-exam-reports");
             success_toast(res.data);
             return res.data;
         }
@@ -22,7 +22,7 @@ export const createFinalExamReport = createAsyncThunk(
     "createFinalExamReport",
     async (data: any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.post("http://localhost:8000/api/final_exam_reports", data);
+            const res = await axiosInstance.post("http://localhost:8000/api/final-exam-reports", data);
             success_toast(res.data);
             return res.data;
         }
@@ -37,7 +37,7 @@ export const updateFinalExamReport = createAsyncThunk(
     "updateFinalExamReport",
     async ({data,id}: any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.put(`http://localhost:8000/api/final_exam_reports/${id}`, data);
+            const res = await axiosInstance.put(`http://localhost:8000/api/final-exam-reports/${id}`, data);
             success_toast(res.data);
             return res.data;
         }
@@ -52,7 +52,7 @@ export const deleteFinalExamReport = createAsyncThunk(
     "deleteFinalExamReport",
     async (final_exam_report_id: any, { rejectWithValue }) => {
         try {
-            const res = await axiosInstance.delete(`http://localhost:8000/api/final_exam_reports/${final_exam_report_id}`);
+            const res = await axiosInstance.delete(`http://localhost:8000/api/final-exam-reports/${final_exam_report_id}`);
             success_toast(res.data);
             return res.data;
         }
