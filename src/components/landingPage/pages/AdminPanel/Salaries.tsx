@@ -22,7 +22,7 @@ import { getAllAccounts } from '../../../../app/feature/Account/AccountApi'
 
 
 export const Salaries = () => {
-
+  const authState = useAppSelector((store) => store.AuthSlice);
   const dispatch = useAppDispatch();
   const salaryState = useAppSelector((store) => store.SalarySlice);
   const userState = useAppSelector((store) => store.UserSlice);
@@ -83,7 +83,7 @@ export const Salaries = () => {
         incentive_amount: yup.string().required("Incentive Pay is required"),
         deduction_amount: yup.string().required("Deduction Amount is required"),
         deduction_title: yup.string().required("Deduction Title is required"),
-        net_pay: yup.string().required("Net Pay is required"),
+       
        
       })
     ),
@@ -99,7 +99,7 @@ export const Salaries = () => {
       setValue("incentive_amount", selectedSalary?.incentive_amount);
       setValue("deduction_amount", selectedSalary?.deduction_amount);
       setValue("deduction_title", selectedSalary?.deduction_title);
-      setValue("net_pay", selectedSalary?.net_pay);
+      
      
       
 
@@ -148,7 +148,9 @@ export const Salaries = () => {
       <Layout>
         <div className="w-full">
           <TableLayout heading="Salaries"
-            rightheading={<Buttons
+            rightheading={
+              authState.current_user?.roles.includes("accountant") &&
+            <Buttons
               text="Add New"
               type="button"
               className="dashboardlink"
@@ -302,14 +304,7 @@ export const Salaries = () => {
                 placeholder="Enter Deduction Title"
               />
 
-              <TextFields
-                register={register}
-                error={errors?.net_pay?.message}
-                name="net_pay"
-                label="Net Pay"
-                type="number"
-                placeholder="Enter Net Pay"
-              />
+             
 
              
 

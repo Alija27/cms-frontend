@@ -187,7 +187,8 @@ const Teachers = () => {
 
                                         <th>Course</th>
                                         <th>Subject</th>
-                                        <th>Action</th>
+                                        {authState.current_user?.roles.includes("admin") &&(<th>Action</th>)}
+                                        
 
 
                                     </tr>
@@ -215,7 +216,9 @@ const Teachers = () => {
                                                 <span key={subject.id}>{subject.subject_name}
                                                     {index !== teacher.subject.length - 1 ? ', ' : ''}</span>
                                             ))}</td>
+                                            { authState.current_user?.roles.includes("admin") &&(
                                             <TableActions>
+                                                
                                                 <div className="hover:text-blue-800">
                                                     <FaEdit size={20} onClick={() => {
                                                         setSelectedTeacher(teacher);
@@ -230,6 +233,7 @@ const Teachers = () => {
                                                     }} />
                                                 </div>
                                             </TableActions>
+                                            )}
                                         </tr>
                                     ))}
                                 </TBody>

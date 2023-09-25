@@ -20,6 +20,7 @@ import {SelectInput} from '../../../shared/inputs/SelectInput'
 import { getAllSemesters } from '../../../../app/feature/Semester/SemesterApi'
 
 const Subject = () => {
+    const authState = useAppSelector((store) => store.AuthSlice);
     const dispatch = useAppDispatch();
     const SubjectState = useAppSelector((store) => store.SubjectSlice);
     const courseState = useAppSelector((store) => store.CourseSlice);
@@ -141,7 +142,12 @@ const [showViewModal, setShowViewModal] = useState(false);
             <Layout>
                 <div className="w-full">
                     <TableLayout heading="Subjects"
-                        rightheading={<Buttons
+
+                        rightheading={
+                        
+                            authState.current_user?.roles.includes("admin") &&
+
+                        <Buttons
                             text="Add New"
                             type="button"
                             className="dashboardlink"
@@ -150,7 +156,8 @@ const [showViewModal, setShowViewModal] = useState(false);
                             }
                             }
 
-                        />}>
+                        />
+                    }>
                         <div >
                             <Table >
                                 <THead>
@@ -161,7 +168,8 @@ const [showViewModal, setShowViewModal] = useState(false);
                                         <th>Semester</th>
                                         <th>Subject Code</th>
                                         <th>Publication</th>
-                                        <th>Actions</th>
+                                        {authState.current_user?.roles.includes("admin") &&(<th>Actions</th>)}
+                                        
 
                                     </tr>
                                 </THead>
@@ -174,6 +182,8 @@ const [showViewModal, setShowViewModal] = useState(false);
                                             <td>{subject?.semester_name}</td>
                                             <td>{subject?.subject_code}</td>
                                             <td>{subject?.publication}</td>
+                                            {authState.current_user?.roles.includes("admin") &&(
+
                                             <TableActions>
                                                 {/* <div className="hover:text-green-800">
                                                     <FaEye size={20} onClick={() => {
@@ -195,7 +205,7 @@ const [showViewModal, setShowViewModal] = useState(false);
                                                     }} />
                                                 </div>
                                             </TableActions>
-
+                                            )}
                                         </tr>
                                     ))}
                                 </TBody>

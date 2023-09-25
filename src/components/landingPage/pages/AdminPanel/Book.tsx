@@ -17,7 +17,7 @@ import { getAllCourses } from '../../../../app/feature/Course/CourseApi'
 
 
 export const Books = () => {
-
+  const authState = useAppSelector((store) => store.AuthSlice);
   const dispatch = useAppDispatch();
   const bokState = useAppSelector((store) => store.BookSlice);
   const courseState = useAppSelector((store) => store.CourseSlice);
@@ -25,6 +25,7 @@ export const Books = () => {
   //display all Books
   useEffect(() => {
     dispatch(getAllBooks());
+    dispatch(getAllCourses(null));
   }, [dispatch]);
 
 
@@ -111,7 +112,7 @@ export const Books = () => {
       <Layout>
         <div className="w-full">
           <TableLayout heading="Books"
-            rightheading={<Buttons
+            rightheading={  authState.current_user?.roles.includes("librarian") && <Buttons
               text="Add New"
               type="button"
               className="dashboardlink"
@@ -205,6 +206,7 @@ export const Books = () => {
                 label="Quantity" />
 
               <SelectInput
+                text="Select Course"
                 register={register}
                 error={errors?.course_id?.message}
                 name="course_id"

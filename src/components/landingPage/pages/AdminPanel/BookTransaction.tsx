@@ -66,7 +66,7 @@ const BookTransaction = () => {
                 book_id: yup.string().required(),
                 book_code: yup.string().required(),
                 user_id: yup.string().required(),
-                issue_date: yup.string().required(),
+                
                 return_date: yup.string().nullable(),
                 status: yup.string().nullable(),
 
@@ -83,7 +83,7 @@ const BookTransaction = () => {
             setValue("book_id", selectedBookTransaction.book_id);
             setValue("book_code", selectedBookTransaction.book_code);
             setValue("user_id", selectedBookTransaction.user_id);
-            setValue("issue_date", selectedBookTransaction.issue_date);
+           
             setValue("return_date", selectedBookTransaction.return_date);
             setValue("status", selectedBookTransaction.status);
         }
@@ -282,12 +282,12 @@ const BookTransaction = () => {
                                                         setShowViewModal(true)
                                                     }} />
                                                 </div> */}
-                                                <div className="hover:text-blue-800">
+                                                {/* <div className="hover:text-blue-800">
                                                     <FaEdit size={20} onClick={() => {
                                                         { setSelectedBookTransaction(bookTransaction) }
                                                         setShowAddModal(true);
                                                     }} />
-                                                </div>
+                                                </div> */}
 
                                                 <div className="hover:text-red-800">
                                                     <AiFillDelete size={20} onClick={() => {
@@ -316,6 +316,7 @@ const BookTransaction = () => {
                         <ModalBody>
 
                             <SelectInput
+                            text="Book"
                                 register={register}
                                 error={errors.book_id?.message}
                                 name="book_id"
@@ -332,6 +333,7 @@ const BookTransaction = () => {
 
                             />
                             <SelectInput
+                                text="User"
                                 register={register}
                                 error={errors.user_id?.message}
                                 name="user_id"
@@ -348,13 +350,7 @@ const BookTransaction = () => {
                                 onChange={handleUserChange}
                             />
 
-                            <TextFields
-                                register={register}
-                                error={errors.issue_date?.message}
-                                name="issue_date"
-                                type="date"
-                                placeholder="Enter  Issued Date here"
-                                label="Issue Date" />
+                           
 
                             <TextFields
                                 register={register}

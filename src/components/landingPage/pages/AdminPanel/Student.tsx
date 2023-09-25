@@ -21,6 +21,7 @@ import { getAllBatches } from '../../../../app/feature/Batch/BatchApi'
 
 
 const Students = () => {
+    const authState = useAppSelector((store) => store.AuthSlice);
     const dispatch = useAppDispatch();
     const studentState = useAppSelector((store) => store.StudentSlice);
     const departmentState = useAppSelector((store) => store.DepartmentSlice);
@@ -162,20 +163,10 @@ const Students = () => {
             <Layout>
                 <div className="w-full">
                     <TableLayout heading="Students"
-
-
-
-
                         rightheading={
-                        <div className="flex gap-2">
-                            <a href="students/course/">
-                            <Buttons
-                            text="View ByCourse"
-                            type="button"
-                            className="dashboardlink"
-                           
-                        />
-                        </a>
+                            authState.current_user?.roles.includes("admin") &&
+
+                       
 
                         <Buttons
                             text="Add New"
@@ -186,7 +177,7 @@ const Students = () => {
                                 setShowAddModal(true)
                             }}
                         />
-                        </div>}>
+                      }>
                         <div >
                             <Table >
                                 <THead>
@@ -198,7 +189,9 @@ const Students = () => {
                                         <th>Course</th>
                                         <th>Batch</th>
                                         <th>Guardian Name</th>
-                                        <th>Action</th>
+                                        {authState.current_user?.roles.includes("admin") &&(<th>Action</th>)}
+
+                                        
 
 
                                     </tr>
@@ -213,6 +206,11 @@ const Students = () => {
                                             <td>{student?.course?.course_name}</td>
                                             <td>{student?.batch?.year}</td>
                                             <td>{student?.user?.guardian_name}</td>
+
+
+
+                                            {authState.current_user?.roles.includes("admin") &&(
+
                                             <TableActions>
                                                 <div className="hover:text-blue-800">
                                                     <FaEdit size={20} onClick={() => {
@@ -228,6 +226,7 @@ const Students = () => {
                                                     }} />
                                                 </div>
                                             </TableActions>
+                                            )}
                                         </tr>
                                     ))}
                                 </TBody>

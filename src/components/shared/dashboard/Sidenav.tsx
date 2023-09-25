@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import logo from '../../../assets/LICTlogo.png'
 import { FaCaretDown } from 'react-icons/fa'
 import { FaCaretRight } from 'react-icons/fa'
@@ -8,6 +8,7 @@ import { DLinks, DNavLinks } from "../../../constants/Constants"
 
 const Sidenav = ({ navlinks }: any) => {
     const [isSidenavOpen, setSidenavOpen] = useState(false);
+    const location = useLocation();
 
     const SidenavToggle = () => {
         setSidenavOpen(!isSidenavOpen);
@@ -35,7 +36,9 @@ const Sidenav = ({ navlinks }: any) => {
                                     {navlink.links.map((link: DLinks) => {
                                         return (
                                             <>
-                                            <NavLink className={`${(({isActive,}:any)=>isActive &&"bg-[#15C39A]")}`} to={link.to}>
+                                            <NavLink 
+                                            to={link.to}
+                                            >
                                                 <div className=" dashlink p-2 rounded hover:text-white  mt-1 flex" key={link.to} >
                                                     <span>{link.icon}</span> <span className="pl-5">{link.name}</span>
                                                 </div>

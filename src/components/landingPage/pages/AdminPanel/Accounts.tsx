@@ -147,7 +147,7 @@ export const Accounts = () => {
                     <th>Paid Fees</th>
                     <th>Remaining Fees</th>
                     <th>Course</th>
-                    <th>Actions</th>
+                   {/*  <th>Actions</th> */}
 
                   </tr>
                 </THead>
@@ -160,7 +160,7 @@ export const Accounts = () => {
                       <td>{account?.paid_fees}</td>
                       <td>{account?.remaining_fees}</td>
                       <td>{account?.course_name}</td>
-                      <TableActions>
+                     {/*  <TableActions>
                         <div className="hover:text-blue-800">
                           <FaEdit size={20} onClick={() => {
                             setSelectedAccount(account);
@@ -175,7 +175,7 @@ export const Accounts = () => {
 
                           }} />
                         </div>
-                      </TableActions>
+                      </TableActions> */}
 
                     </tr>
                   ))}

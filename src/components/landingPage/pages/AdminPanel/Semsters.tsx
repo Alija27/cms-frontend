@@ -111,7 +111,7 @@ const Semsters = () => {
                   <tr>
                     <th>SN</th>
                     <th>Name</th>
-                    <th>Actions</th>
+                    
 
                   </tr>
                 </THead>
@@ -120,27 +120,7 @@ const Semsters = () => {
                     <tr key={semester?.id}>
                       <td>{index + 1}</td>
                       <td>{semester?.name}</td>
-                      <TableActions>
-                        <div className="hover:text-green-800">
-                          <FaEye size={20} onClick={() => {
-                            setSelectedSemester(semester)
-                            setShowViewModal(true)
-                          }} />
-                        </div>
-                        <div className="hover:text-blue-800">
-                          <FaEdit size={20} onClick={() => {
-                            { setSelectedSemester(semester) }
-                            setShowAddModal(true);
-                          }} />
-                        </div>
-
-                        <div className="hover:text-red-800">
-                          <AiFillDelete size={20} onClick={() => {
-                            setSelectedSemester(semester)
-                            setShowDeleteModal(true)
-                          }} />
-                        </div>
-                      </TableActions>
+                      
 
                     </tr>
                   ))}
